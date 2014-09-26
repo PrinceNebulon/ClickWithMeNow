@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+    <script type="text/javascript">
+        var cwmnInstance;
+        var chatWindow;
+        var pubLink;
+
+        function Setup() {
+            document.getElementById("requestChatLink").addEventListener("click", RequestChat, false);
+            window.loadCwmn = loadCwmn;
+        }
+
+        function loadCwmn() {
+            var cwmn = new Cwmn({});
+            cwmnInstance = cwmn.instance;
+            cwmn.init(function() {});
+        }
+
+        function RequestChat() {
+            var name = document.getElementById('guestName').value;
+            chatWindow = open('chat/chathost.html?chatUsername=' + name, 
+                "Chat Window", "resizable=no, width=900, height=560, toolbar=no");
+        }
+    </script>
+    <script src="clickwithmenow.js"></script>
+
+    <!-- [CWMN] -->
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- [/CWMN] -->
+    <title>Interactive Intelligence</title>
+    <style>
+        body {
+            font-family: "Arial","Helvetica", sans-serif;
+            font-size: 10pt;
+            min-height: 1798px;
+            height:100%;
+            padding: 0;
+            margin: 0;
+            background: url("images/ininsite.png");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .footer {
+            position: fixed; 
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background-color: transparent;
+        }
+
+        #chatContainer {
+            width: 300px;
+            margin: auto 10px auto auto;
+            padding: 10px;
+            border: 3px solid orange;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        #chatImageContainer {
+            position: relative;
+            float: right;
+            cursor: pointer;
+        }
+
+        #chatImage {
+        }
+
+        #chatText {
+            color: blue;
+            font-size: 14pt;
+        }
+
+        #chatChatText:hover {
+            text-decoration: underline;
+        }
+
+        #guestName, #guestReason {
+            width: 170px;
+        }
+
+        /* [CWMN] */
+        p.hide-by-default {
+            display: none;
+        }
+        /* [/CWMN] */
+    </style>
+</head>
+<body onload="Setup()">
+    <div class="footer">
+        <div id="chatContainer">
+            <div style="float: left">
+                Your Name:<br />
+                <input type="text" id="guestName" value="Website Guest" /><br />
+                How can we help you:<br />
+                <select id="guestReason">
+                    <option value="Sales">Open a new account</option>
+                    <option value="Support">Help with website</option>
+                    <option value="Marketing">Business relations</option>
+                </select>
+            </div>
+            <div id="chatImageContainer" align="center">
+                <a id="requestChatLink" href="#">
+                    <img id="chatImage" src="images/chat_bubble2.png" /><br />
+                    <span id="chatText">Chat Now!</span>
+                </a>
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,163 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CWMN/Interactive Intelligence POC</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style>
+		body {
+			padding-top: 50px;
+		}
+		
+		.hide-by-default {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<p><img src="images/logo2b.png"></p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<h3>Host a Session</h3>
+				<p class="hide-by-default">
+					<a href="#" id="initCwmnLink" class="btn btn-primary">Start a session</a>
+				</p>
+				<p class="hide-by-default">
+					<a href="#" id="endCwmnLink" class="btn btn-danger">Click here to end the session.</a>
+				</p>
+				<p id="publicLink" class="hide-by-default"><a href="" target="_blank"></a></p>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+				<h3>Send an Invite to Host</h3>
+				<div id="ithNotifications"></div>
+				<div class="form-group">
+					<label for="ithUrl">URL <span class="small">(with protocol, must have CWMN installed)</span></label>
+					<input type="url" class="form-control" id="ithUrl" placeholder="Enter URL (with protocol)">
+				</div>
+				<div class="form-group">
+					<label for="ithName">Name</label>
+					<input type="text" class="form-control" id="ithName" placeholder="Enter Name of Host">
+				</div>
+				<div class="form-group">
+					<label for="ithEmail">Email</label>
+					<input type="email" class="form-control" id="ithEmail" placeholder="Enter Email of Host">
+				</div>
+				<div class="form-group">
+					<label for="ithMessage">Message</label>
+					<textarea class="form-control" id="ithMessage" rows="3">You're invited to host a CWMN session.</textarea>
+				</div>
+				<a href="#" id="ithLink" class="btn btn-primary">Send Invite to Host</a>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		(function (w, d) {
+			var cwmnInstance;
+			var pubLink;
+			
+			var init = d.getElementById('initCwmnLink');
+			var end = d.getElementById('endCwmnLink');
+			var publicLinkArea = d.getElementById('publicLink');
+			
+			var ithLink = d.getElementById('ithLink');
+			var ithUrl = d.getElementById('ithUrl');
+			var ithName = d.getElementById('ithName');
+			var ithEmail = d.getElementById('ithEmail');
+			var ithMesssage = d.getElementById('ithMessage');
+			
+			var ithNotifications = d.getElementById('ithNotifications');
+			
+			function loadCwmn() {
+				var cwmn = new Cwmn({});
+				cwmnInstance = cwmn.instance;
+				cwmn.init(function() {
+					setUIState();
+				});
+			}
+			
+			function setUIState() {
+				var inSession = cwmnInstance.userData.screenId != '';
+				init.parentNode.style.display = inSession ? 'none' : 'block';
+				end.parentNode.style.display = inSession ? 'block' : 'none';
+				publicLinkArea.style.display = inSession ? 'block' : 'none';
+				publicLinkArea.childNodes[0].href = inSession ? cwmnInstance.publicLink.generate() : '';
+				publicLinkArea.childNodes[0].innerHTML = inSession ? cwmnInstance.publicLink.generate() : '';
+			}
+			
+			function startCwmnSession() {
+				cwmnInstance.sessionAPI.initializeScreen({
+					hostName: 'Click With Me Now demo',
+					hostEmail: 'noreply@clickwithmenow.com'
+				}, function() {
+					cwmnInstance.publicLink.activate();
+					pubLink = cwmnInstance.publicLink.generate();
+					cwmnInstance.UI.startHosting();
+					setUIState();
+				});
+			}
+			
+			function stopCwmnSession() {
+				cwmnInstance.Socket.discoNotice();
+				setUIState();
+			}
+			
+			function sendInviteToHost() {
+				ithNotifications.innerHTML= '';
+				
+				var url = ithUrl.value;
+				var name = ithName.value;
+				var email = ithEmail.value;
+				var message = ithMesssage.value;
+				
+				cwmnInstance.sessionAPI.inviteToHost({
+					hostName: 'Click With Me Now demo',
+					hostEmail: 'noreply@clickwithmenow.com',
+					inviteName: name,
+					inviteEmail: email,
+					message: message,
+					url: url
+				}, function(result) {
+					var hostUrl = 'https://ms.clickwith.me/host/' + result.screen.screenId;
+					var successNotification = d.createElement('div');
+					var link = '<br />Guest: <a href="' + result.inviteLink + '" target="_blank">' + result.inviteLink + '</a><br />';
+					link += 'Host: <a href="' + hostUrl + '" target="_blank">' + hostUrl + '</a><br />';
+					successNotification.innerHTML = 'Invite sent. Go to ' + link + ' to view the host\'s screen.';
+					successNotification.className = 'alert alert-success';
+					ithNotifications.appendChild(successNotification);
+					console.log(result);
+				}, function(error) {
+					
+				});
+			}
+			
+			init.addEventListener('click', function(e) {
+				startCwmnSession();
+				e.preventDefault();
+			});
+			
+			end.addEventListener('click', function(e) {
+				stopCwmnSession();
+				e.preventDefault();
+			});
+			
+			ithLink.addEventListener('click', function(e) {
+				sendInviteToHost();
+				e.preventDefault();
+			});
+			
+			w.loadCwmn = loadCwmn;
+			
+		})(window, document);
+	</script>
+	<script src="https://assets-s.clickwith.me/clickwithmenow.js"></script>
+	<!-- <script src="clickwithmenow2.js"></script> -->
+
+</body>
