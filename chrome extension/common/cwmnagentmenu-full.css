@@ -1,0 +1,66 @@
+body {
+	font-family: Arial, sans-serif;
+	font-size: 10pt;
+	padding: 0px;
+	margin: 0px;
+}
+
+span {
+	color: white;
+}
+
+#cwmnagentmenu {
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid #195F7A;
+}
+
+#cwmnagentmenu span {
+	display: block;
+	padding: 2px 4px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#cwmnagentmenu span:hover {
+	color: #F1B20F;
+}
+
+#cwmnagentmenu ul {
+	padding: 0;
+	margin: 0px;
+}
+
+#cwmnagentmenu > ul > li {
+	padding: 0;
+	margin: 0px;
+	border: 0px;
+}
+
+#cwmnagentmenu li {
+	display: block;
+	padding: 0px 0px 0px 10px;
+	border-width: 1px 0 0px 0;
+	border-color: #55BDE0;
+	border-style: solid;
+}
+
+#cwmnagentmenu > ul > li > ul > li {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+
+#cwmnagentmenu > ul > li > ul > li > span {
+	font-size: 11pt;
+	font-weight: bold;
+	color: #F3B20D;
+}
+
+#cwmnagentmenu > ul > li > ul > li > ul > li {
+	background-color: #4498B4;
+}
+
+#cwmnagentmenu > ul > li > ul > li {
+	background-color: #195F7A;
+}

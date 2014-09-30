@@ -3,11 +3,11 @@
 	width: 35px;
 	height: 35px;
 	display:block;
-	background:transparent url('chrome-extension://lcoijeikhmplofegbmjildgohljeapjo/cwmn.png') center top no-repeat;
+	background:transparent url('chrome-extension://lcoijeikhmplofegbmjildgohljeapjo/img/cwmn.png') center top no-repeat;
 }
 	
 #cwmnMenuButton:hover {
-	background-image: url('chrome-extension://lcoijeikhmplofegbmjildgohljeapjo/cwmn2.png');
+	background-image: url('chrome-extension://lcoijeikhmplofegbmjildgohljeapjo/img/cwmn2.png');
 }
 
 

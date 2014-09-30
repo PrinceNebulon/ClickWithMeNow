@@ -4,15 +4,39 @@
   "version": "2.1",
   "minimum_chrome_version": "23",
   "web_accessible_resources": [
-    "cwmn.png",
-    "cwmn2.png"
+    "img/cwmn.png",
+    "img/cwmn2.png",
+    "common/clicklibs_2.3.2.js", 
+    "common/socket.io.js"
   ],
   "content_scripts": [
     {
+      "matches": ["*://apps.inindca.com/directory/*"],
       "run_at": "document_end",
-      "matches": ["*://apps.inindca.com/*"],
-      "css": ["inindca.css", "cwmnagentmenu.css"],
-      "js": ["jquery-2.1.1.js", "clickwithmenow.js", "inindca.js"]
+      "css": ["common/inindca.css", "common/cwmnagentmenu.css"],
+      "js": ["common/jquery-2.1.1.js", "directory/directory_content_loader.js", "common/clickwithmenow.js"]
+    },
+    {
+      "matches": ["*://apps.inindca.com/contact-center/*"],
+      "run_at": "document_end",
+      "css": ["common/inindca.css", "common/cwmnagentmenu.css"],
+      "js": ["common/jquery-2.1.1.js", "contact-center/contact-center_content_loader.js", "common/clickwithmenow.js"]
+    },
+    {
+      "matches": ["*://inindca-webchat-test.s3-website-us-east-1.amazonaws.com/*"],
+      "run_at": "document_end",
+      "css": ["common/inindca.css", "common/cwmnagentmenu.css"],
+      "js": ["common/jquery-2.1.1.js", "customer/customer_content_loader.js", "common/clickwithmenow.js"]
+    },
+    {
+      "matches": ["*://tim-cic4su5.dev2000.com/cwmn/index2.html"],
+      "run_at": "document_end",
+      "js": ["common/jquery-2.1.1.js", "common/clicklibs_2.3.2.js", "common/socket.io.js", "test/test_content_loader.js", "common/clickwithmenow.js"]
     }
-  ]
+  ],
+  "browser_action": {
+    "default_icon": "img/cwmn_small.png",
+    "default_popup": "common/cwmnlinks.html"
+  },
+  "permissions": ["tabs", "http://*/*", "https://*/*"]
 }
