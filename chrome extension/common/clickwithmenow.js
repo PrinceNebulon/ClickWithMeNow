@@ -1456,7 +1456,7 @@ function loadLanguage(lang) {
 
             return match ? "?" === match[3] ? url = url.replace(cbreg, "$1=" + cbval) : cbval = match[3] : url = urlappend(url, cbkey + "=" + cbval), win[cbval] = generalCallback, script.type = "text/javascript", script.src = url, script.async = !0, "undefined" == typeof script.onreadystatechange || isIE10 || (script.htmlFor = script.id = "_reqwest_" + reqId), script.onload = script.onreadystatechange = function() {
                 return script[readyState] && "complete" !== script[readyState] && "loaded" !== script[readyState] || loaded ? !1 : (script.onload = script.onreadystatechange = null, script.onclick && script.onclick(), console.log(lastValue), fn(lastValue), lastValue = void 0, head.removeChild(script), void(loaded = 1))
-            }, head.appendChild(script), {
+            }, $('head').append(script), {
                 abort: function() {
                     script.onload = script.onreadystatechange = null, err({}, "Request is aborted: timeout", {}), lastValue = void 0, head.removeChild(script), loaded = 1
                 }
