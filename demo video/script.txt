@@ -1,0 +1,20 @@
+This demonstration will show the Click With Me Now proof of concept integration for Pure Cloud.
+
+The browser on the left is showing a customer's web chat.
+The browser on the right is showing the agent handling the web chat.
+
+The Click With Me Now Chrome Extension allows the agent to select a page to either host a session, where the agent shows a page to the customer, or initiate a viewing session, where the customer shows a page to the agent.
+
+When the agent clicks a link to host, the host URL is popped to a new window on the agent's desktop and the view link is inserted into the chat.
+
+<AGENT HOST>
+
+The view link is added to the chat window for the customer to open.
+
+<CUSTOMER VIEW>
+
+The links for an agent to watch the customer's screen work in the same way, but with the links reversed. The agent will get the view link popped in a new window and the customer will get the host link.
+
+<SHOW IT>
+
+This concludes the demonstration of the Click With Me Now integration for Pure Cloud.
