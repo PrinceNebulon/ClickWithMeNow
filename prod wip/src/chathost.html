@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- BypassLoginForm/chatOrCallback.html?chatUsername={name} -->
+	<script type="text/javascript" src="/cwmn/jquery-2.1.1.js"></script>
+    <script type="text/javascript">
+        var cwmnInstance;
+        var chatWindow;
+        var pubLink;
+
+        function Setup() {
+
+            // start chat
+            document.getElementById('chatiframe').src = 'chat/BypassLoginForm/chatOrCallback.html?chatUsername='+getParameterByName('chatUsername');
+        }
+
+        // Show methods
+        function invokeShowHome() {
+        	console.debug('invokeShowHome');
+        	showAnAgent('http://tim-cic4su5.dev2000.com/cwmn/index.html');
+        }
+
+        function invokeShowRegisterDemo() {
+        	console.debug('invokeShowRegisterDemo');
+        	showAnAgent('http://tim-cic4su5.dev2000.com/cwmn/demo2.html');
+        }
+
+        function invokeShowPressReleases() {
+        	console.debug('invokeShowPressReleases');
+        	showAnAgent('http://tim-cic4su5.dev2000.com/cwmn/pr.html');
+        }
+
+        // See methods
+        function invokeSeeHome() {
+        	console.debug('invokeSeeHome');
+        	inviteAgentToHost('http://tim-cic4su5.dev2000.com/cwmn/index.html');
+        }
+
+        function invokeSeeRegisterDemo() {
+        	console.debug('invokeSeeRegisterDemo');
+        	inviteAgentToHost('http://tim-cic4su5.dev2000.com/cwmn/demo2.html');
+        }
+
+
+        function invokeSeePressReleases() {
+        	console.debug('invokeSeePressReleases');
+        	inviteAgentToHost('http://tim-cic4su5.dev2000.com/cwmn/pr.html');
+        }
+
+        function inviteAgentToHost(url) {
+        	console.debug('sendInviteToHost');
+			cwmnInstance.sessionAPI.inviteToHost({
+				hostName: getParameterByName('chatUsername'),
+				hostEmail: 'noreply@inin.com',
+				inviteName: 'Agent',
+				inviteEmail: 'noreply@inin.com',
+				message: 'no message',
+				url: url
+			}, function(result) {
+        		console.debug(JSON.stringify(result));
+				sendToChat('https://ms.clickwith.me/host/' + result.screen.screenId);
+				window.open(result.inviteLink);
+			}, function(error) {
+        		console.error(JSON.stringify(error));
+			});
+		}
+
+        function showAnAgent(url) {
+        	console.debug('sendInviteToHost');
+			cwmnInstance.sessionAPI.inviteToHost({
+				hostName: getParameterByName('chatUsername'),
+				hostEmail: 'noreply@inin.com',
+				inviteName: 'Agent',
+				inviteEmail: 'noreply@inin.com',
+				message: 'no message',
+				url: url
+			}, function(result) {
+        		console.debug(JSON.stringify(result));
+				sendToChat(result.inviteLink);
+				window.open('https://ms.clickwith.me/host/' + result.screen.screenId);
+			}, function(error) {
+        		console.error(JSON.stringify(error));
+			});
+		}
+
+		function sendToChat(message) {
+			$('#chatiframe').contents().find('#inputPanel').val(message);
+            setTimeout(function() { $('#chatiframe').contents().find('#sendButton').click(); }, 500);
+		}
+
+		function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+
+
+
+            
+        function startCwmnSession() {
+            cwmnInstance.sessionAPI.initializeScreen({
+                hostName: 'T-host',
+                hostEmail: 'tim.smith@inin.com'
+            }, function() {
+                cwmnInstance.publicLink.activate();
+                pubLink = cwmnInstance.publicLink.generate();
+                cwmnInstance.UI.startHosting();
+                SetLink();
+            });
+        }
+
+        function SetLink() {
+            var inSession = cwmnInstance.userData.screenId != '';
+            if (!inSession) return;
+			$('#chatiframe').contents().find('#inputPanel').val(pubLink);
+            setTimeout(function() { $('#chatiframe').contents().find('#sendButton').click(); }, 500);
+        }
+
+        function InviteToUrl(){
+        	cwmnInstance.sessionAPI.inviteToHost({
+				hostName: 'Customer Host',
+				hostEmail: 'noreply@clickwithmenow.com',
+				inviteName: 'Agent Guest',
+				inviteEmail: 'tim.smith@inin.com',
+				message: 'plz join',
+				url: 'http://tim-cic4su5.dev2000.com/cwmn/index.html'
+			}, function(result) {
+				var successNotification = d.createElement('div');
+				var link = '<a href="' + result.inviteLink + '" target="_blank">' + result.inviteLink + '</a>';
+				successNotification.innerHTML = 'Invite sent. Go to ' + link + ' to view the host\'s screen.';
+				successNotification.className = 'alert alert-success';
+				ithNotifications.appendChild(successNotification);
+				console.log(result);
+			}, function(error) {
+				
+			});
+        }
+</script>
+	<script type="text/javascript">
+		// Define the link options here
+		var cwmnHostOptions = [
+				{
+					text: 'Google',
+					description: 'When you need a question answered and aren\'t quite lazy enough to ask someone else... Google!',
+					url: 'http://google.com'
+				},
+				{
+					text: 'Bing',
+					description: 'It\'s Bing, not Ding.',
+					url: 'http://bing.com'
+				}
+			];
+		var cwmnGuestOptions = [
+				{
+					text: 'Interactive Intelligence',
+					description: 'Interacting Intelligently',
+					url: 'http://inin.com'
+				},
+				{
+					text: 'Click With Me Now',
+					description: 'Now, click with me you will',
+					url: 'http://clickwithmenow.com/'
+				}
+			];
+
+			$(document).ready(function(){
+				$.each(cwmnHostOptions, function (index, value){
+					// Add item to list
+					$('#HostOptionList').append('<li id="hostLink' + index + '"><a href="#" alt="' + value.description + '" onclick="invokeHostLink(\'' + value.url + '\')">' + value.text + '<span class="hostLinkHoverText">Click to launch</span></a><div class="hostLinkDescription">' + value.description + '</div></li>');
+						console.debug($('#hostLink' + index));
+
+					// Hover in/out
+					$('#hostLink' + index).hover(function(){
+						// Mouse in
+						console.debug('hover in');
+						$(this).find('.hostLinkHoverText').css('display','inline');
+						$(this).find('.hostLinkDescription').slideDown({
+							duration: 70,
+							queue: false
+						});
+					},function(){
+						// Mouse out
+						console.debug('hover out');
+						$(this).find('.hostLinkHoverText').css('display','none');
+						$(this).find('.hostLinkDescription').slideUp();
+					});
+				});
+				$.each(cwmnGuestOptions, function (index, value){
+					$('#GuestOptionList').append('<li><a id="guestLink' + index + '" href="#" alt="' + value.description + '" onclick="invokeGuestLink(\'' + value.url + '\')">' + value.text + '</a></li>');
+				});
+			});
+
+			function invokeHostLink(url){
+				console.debug('Host link: ' + url);
+			}
+
+			function invokeGuestLink(url){
+				console.debug('Guest link: ' + url);
+			}
+	</script>
+	<title>Web Chat</title>
+	<style type="text/css">
+		body {
+			margin: 0px;
+			padding: 0px;
+			height: 100vh;
+			background-color: #FBCA48;
+            font-family: "Arial","Helvetica", sans-serif;
+            font-size: 10pt;
+		}
+
+		iframe {
+			margin: 0px;
+			padding: 0px;
+			border-width: 0px;
+			border-collapse: collapse;
+			width: 75%;
+			height: 99%;
+		}
+
+		#cwmnlogobox {
+			height: 39px;
+			background-color: #0E1C2C;
+			width: 100%;
+			border-width: 0 0 1px 0;
+			border-color: #DDEDFF;
+			border-style: solid;
+		}
+
+		#cwmnlogobox2 {
+			height: 32px;
+			background-color: #CCDAEA;
+			width: 100%;
+			border-width: 0 0 4px 0;
+			border-color: #468BDB;
+			border-style: solid;
+		}
+
+		#ButtonContainer {
+			float: right;
+			width: 25%;
+			margin: 0px;
+			background-color: #DDEDFF;
+			height: 100%;
+		}
+
+		#ButtonContainerContents {
+			margin: 12px;
+		}
+
+		button, input {
+			width: 100%;
+		}
+
+		ul {
+		    list-style-type: none;
+		    padding: 0px;
+		    margin: 0px;
+		}
+
+		li > a {
+			background-color: #FDC023;
+			display: block;
+			padding: 3px;
+			margin: 3px 1px 0 1px;
+			border: 1px solid #F8E4A2;
+			color: #523B10;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		li > a:visited {
+			color: #523B10;
+		}
+
+		li > a:hover {
+			color: #D08710;
+		}
+
+		li > div {
+			background-color: #F4D562;
+			border-width: 0 1px 1px 1px;
+			border-style: solid;
+			border-color: #F8E4A2;
+			padding: 3px;
+			margin: 0 1px 1px 1px;
+		}
+
+		a, a:visited {
+			color: #6B0014;
+		}
+
+		a:hover {
+			color: #007EA2;
+		}
+
+		.hostLinkDescription {
+			display:none;
+		}
+
+		.hostLinkHoverText {
+			float: right;
+			display:none;
+			color: #E19D0B;
+		}
+	</style>
+</head>
+<body onload="Setup()">
+	<iframe id="chatiframe"></iframe>
+	<div id="ButtonContainer">
+		<div id="cwmnlogobox">
+			<img src="img/cwmn logo.png" />
+		</div>
+		<div id="cwmnlogobox2"></div>
+		<div id="ButtonContainerContents">
+			<img src="img/cwmn show agent.png" /><br />
+			<ul id="HostOptionList"></ul>
+			<br />
+			<br />
+			<img src="img/cwmn guided tour.png" /><br />
+			<ul id="GuestOptionList"></ul>
+		</div>
+	</div>
+</body>
+</html>
