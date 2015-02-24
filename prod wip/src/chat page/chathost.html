@@ -216,7 +216,7 @@
 			padding: 0px;
 			border-width: 0px;
 			border-collapse: collapse;
-			width: 75%;
+			width: 99%;
 			height: 99%;
 		}
 
@@ -238,9 +238,17 @@
 			border-style: solid;
 		}
 
+		#cwmnlogobox2 > div {
+			font-size: 14pt;
+			padding: 6px 0 0 6px;
+		}
+
 		#ButtonContainer {
-			float: right;
-			width: 25%;
+			position: fixed;
+			top: 0;
+			right: 0;
+			z-index: 100;
+			width: 260px;
 			margin: 0px;
 			background-color: #DDEDFF;
 			height: 100%;
@@ -261,29 +269,29 @@
 		}
 
 		li > a {
-			background-color: #FDC023;
+			background-color: #0E1C2C;
+			color: #FFFFFF;
 			display: block;
 			padding: 3px;
 			margin: 3px 1px 0 1px;
-			border: 1px solid #F8E4A2;
-			color: #523B10;
+			border: 1px solid #468BDB;
 			text-decoration: none;
 			font-weight: bold;
 		}
 
 		li > a:visited {
-			color: #523B10;
+			color: #FFFFFF;
 		}
 
 		li > a:hover {
-			color: #D08710;
+			color: #BED62F;
 		}
 
 		li > div {
-			background-color: #F4D562;
+			background-color: #CCDAEA;
 			border-width: 0 1px 1px 1px;
 			border-style: solid;
-			border-color: #F8E4A2;
+			border-color: #468BDB;
 			padding: 3px;
 			margin: 0 1px 1px 1px;
 		}
@@ -303,7 +311,7 @@
 		.hostLinkHoverText {
 			float: right;
 			display:none;
-			color: #E19D0B;
+			color: #BED62F;
 		}
 	</style>
 </head>
@@ -313,7 +321,9 @@
 		<div id="cwmnlogobox">
 			<img src="img/cwmn logo.png" />
 		</div>
-		<div id="cwmnlogobox2"></div>
+		<div id="cwmnlogobox2">
+			<div>Screenshare with an agent</div>
+		</div>
 		<div id="ButtonContainerContents">
 			<img src="img/cwmn show agent.png" /><br />
 			<ul id="HostOptionList"></ul>
