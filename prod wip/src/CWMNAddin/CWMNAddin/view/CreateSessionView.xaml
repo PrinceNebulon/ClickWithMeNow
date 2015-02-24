@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="ININ.Alliances.CWMNAddin.view.CreateSessionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:view="clr-namespace:ININ.Alliances.CWMNAddin.view"
+             xmlns:viewmodel="clr-namespace:ININ.Alliances.CWMNAddin.viewmodel"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="500" d:DataContext="{d:DesignInstance viewmodel:CwmnSessionViewModel}">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="0,0,3,0">
+        <StackPanel Orientation="Vertical">
+            <DockPanel LastChildFill="False">
+                <Label DockPanel.Dock="Left">Session Type</Label>
+                <view:BooleanToggle Value="{Binding Path=SimpleSessionType}"
+                                    DockPanel.Dock="Right" Width="80"
+                                    VerticalAlignment="Center" HorizontalAlignment="Right"
+                                    TrueText="Host" TrueColor="#B0C72F" 
+                                    FalseText="View" FalseColor="#B0C72F" />
+            </DockPanel>
+            <DockPanel>
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Left">Select a page:</Label>
+                <DockPanel Margin="10,0,0,0">
+                    <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch">
+                        <Label DockPanel.Dock="Left">URL:</Label>
+                        <Label Content="{Binding ElementName=UrlBox, Path=SelectedItem.Url}" />
+                    </DockPanel>
+                    <ListBox Name="UrlBox" Height="80" ItemsSource="{Binding Path=Urls}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=DisplayText}" HorizontalAlignment="Stretch" TextWrapping="Wrap" 
+                                           Margin="2" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </DockPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
