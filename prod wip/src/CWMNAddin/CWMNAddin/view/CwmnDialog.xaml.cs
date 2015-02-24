@@ -10,6 +10,8 @@ namespace ININ.Alliances.CWMNAddin.view
     /// </summary>
     public partial class CwmnDialog
     {
+        private CwmnSessionViewModel ViewModel { get { return DataContext as CwmnSessionViewModel; } }
+
         public CwmnDialog()
         {
             InitializeComponent();
@@ -52,6 +54,7 @@ namespace ININ.Alliances.CWMNAddin.view
         {
             try
             {
+                ViewModel.SimpleSessionType = sessiontype == CwmnSessionType.Host;
                 HostOrGuestPanel.Visibility = Visibility.Collapsed;
                 SessionViewPanel.Visibility = Visibility.Visible;
             }

@@ -20,11 +20,12 @@
               Grid.Column="1"></Grid>
 
         <Label Grid.Column="0" Content="{Binding ElementName=TheWindow, Path=FalseText}" 
+               Foreground="{Binding ElementName=TheWindow, Path=FalseTextBrush}"
                HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
                     <Setter Property="Visibility" Value="Collapsed" />
-                    <Setter Property="Padding" Value="2" />
+                    <Setter Property="Padding" Value="3" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=TheWindow, Path=Value}" Value="false">
                             <Setter Property="Visibility" Value="Visible" />
@@ -34,10 +35,11 @@
             </Label.Style>
         </Label>
         <Label Grid.Column="1" Content="{Binding ElementName=TheWindow, Path=TrueText}" 
+               Foreground="{Binding ElementName=TheWindow, Path=TrueTextBrush}"
                HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
-                    <Setter Property="Padding" Value="2" />
+                    <Setter Property="Padding" Value="3" />
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ElementName=TheWindow, Path=Value}" Value="true">

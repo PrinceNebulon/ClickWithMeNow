@@ -34,19 +34,44 @@ namespace ININ.Alliances.CWMNAddin.view
 
 
 
-        #region Public Properties
+        #region Dependency Properties
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value", typeof (bool), typeof (BooleanToggle), new PropertyMetadata(false, ValuePropertyChanged));
+            "Value", typeof(bool), typeof(BooleanToggle), new PropertyMetadata(false, ValuePropertyChanged));
 
         public bool Value
         {
-            get { return (bool) GetValue(ValueProperty); }
+            get { return (bool)GetValue(ValueProperty); }
             set
             {
                 SetValue(ValueProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty TrueTextProperty = DependencyProperty.Register(
+            "TrueText", typeof(string), typeof(BooleanToggle), new PropertyMetadata("on"));
+
+        public string TrueText
+        {
+            get { return (string)GetValue(TrueTextProperty); }
+            set
+            {
+                SetValue(TrueTextProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty TrueTextColorProperty = DependencyProperty.Register(
+            "TrueTextColor", typeof(Color), typeof(BooleanToggle), new PropertyMetadata(Colors.Black, TextColorPropertyChanged));
+
+        public Color TrueTextColor
+        {
+            get { return (Color)GetValue(TrueTextColorProperty); }
+            set
+            {
+                SetValue(TrueTextColorProperty, value);
                 OnPropertyChanged();
             }
         }
@@ -56,10 +81,36 @@ namespace ININ.Alliances.CWMNAddin.view
 
         public Color TrueColor
         {
-            get { return (Color) GetValue(TrueColorProperty); }
+            get { return (Color)GetValue(TrueColorProperty); }
             set
             {
                 SetValue(TrueColorProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty FalseTextProperty = DependencyProperty.Register(
+            "FalseText", typeof(string), typeof(BooleanToggle), new PropertyMetadata("off"));
+
+        public string FalseText
+        {
+            get { return (string)GetValue(FalseTextProperty); }
+            set
+            {
+                SetValue(FalseTextProperty, value);
+                OnPropertyChanged();
+            }
+        }
+
+        public static readonly DependencyProperty FalseTextColorProperty = DependencyProperty.Register(
+            "FalseTextColor", typeof(Color), typeof(BooleanToggle), new PropertyMetadata(Colors.Black, TextColorPropertyChanged));
+
+        public Color FalseTextColor
+        {
+            get { return (Color)GetValue(FalseTextColorProperty); }
+            set
+            {
+                SetValue(FalseTextColorProperty, value);
                 OnPropertyChanged();
             }
         }
@@ -69,13 +120,21 @@ namespace ININ.Alliances.CWMNAddin.view
 
         public Color FalseColor
         {
-            get { return (Color) GetValue(FalseColorProperty); }
+            get { return (Color)GetValue(FalseColorProperty); }
             set
             {
                 SetValue(FalseColorProperty, value);
                 OnPropertyChanged();
             }
         }
+
+        #endregion
+
+
+
+        #region Public Properties
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Brush TrueBackgroundBrush
         {
@@ -97,29 +156,19 @@ namespace ININ.Alliances.CWMNAddin.view
             }
         }
 
-        public static readonly DependencyProperty TrueTextProperty = DependencyProperty.Register(
-            "TrueText", typeof (string), typeof (BooleanToggle), new PropertyMetadata("on"));
-
-        public string TrueText
+        public Brush TrueTextBrush
         {
-            get { return (string) GetValue(TrueTextProperty); }
-            set
+            get
             {
-                SetValue(TrueTextProperty, value);
-                OnPropertyChanged();
+                return new SolidColorBrush(TrueTextColor);
             }
         }
 
-        public static readonly DependencyProperty FalseTextProperty = DependencyProperty.Register(
-            "FalseText", typeof (string), typeof (BooleanToggle), new PropertyMetadata("off"));
-
-        public string FalseText
+        public Brush FalseTextBrush
         {
-            get { return (string) GetValue(FalseTextProperty); }
-            set
+            get
             {
-                SetValue(FalseTextProperty, value);
-                OnPropertyChanged();
+                return new SolidColorBrush(FalseTextColor);
             }
         }
 
@@ -165,6 +214,24 @@ namespace ININ.Alliances.CWMNAddin.view
                 // Send notifications
                 toggle.OnPropertyChanged("TrueBackgroundBrush");
                 toggle.OnPropertyChanged("FalseBackgroundBrush");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private static void TextColorPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            try
+            {
+                // Cast to an instance of "this"
+                var toggle = sender as BooleanToggle;
+                if (toggle == null) throw new Exception("Sender was of unexpected type! Expected BooleanToggle; Encountered: " + sender.GetType());
+
+                // Send notifications
+                toggle.OnPropertyChanged("TrueTextBrush");
+                toggle.OnPropertyChanged("FalseTextBrush");
             }
             catch (Exception ex)
             {

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using ININ.Alliances.CWMNAddin.model;
-using ININ.InteractionClient.Attributes;
 
 namespace ININ.Alliances.CWMNAddin.viewmodel
 {
@@ -23,8 +17,8 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
         #region Public Properties
 
         /// <summary>
-        /// 0 = View
-        /// 1 = Host
+        /// [False] = View
+        /// [True] = Host
         /// </summary>
         public bool SimpleSessionType
         {

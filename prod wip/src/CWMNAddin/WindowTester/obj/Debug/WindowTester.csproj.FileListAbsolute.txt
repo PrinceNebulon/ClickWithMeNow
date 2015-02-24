@@ -1,5 +1,4 @@
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\WindowTester.exe.config
-C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\obj\Debug\WindowTester.csprojResolveAssemblyReference.cache
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\WindowTester.exe
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\WindowTester.pdb
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\ININ.Alliances.CWMNAddin.dll
@@ -186,6 +185,7 @@ C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\i3moduleregi
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\openssl-w32r-2-1.dll
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\core_events-w32r-2-1.dll
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\bin\Debug\i3eventlog-w32r-2-1.dll
+C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\obj\Debug\WindowTester.csprojResolveAssemblyReference.cache
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\obj\Debug\App.g.cs
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\obj\Debug\WindowTester_MarkupCompile.cache
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\WindowTester\obj\Debug\WindowTester.Properties.Resources.resources

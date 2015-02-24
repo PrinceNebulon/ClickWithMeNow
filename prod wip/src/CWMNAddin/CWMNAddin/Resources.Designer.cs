@@ -71,6 +71,16 @@ namespace ININ.Alliances.CWMNAddin {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CwmnHost_32 {
+            get {
+                object obj = ResourceManager.GetObject("CwmnHost_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon CwmnIcon {
@@ -86,6 +96,26 @@ namespace ININ.Alliances.CWMNAddin {
         internal static System.Drawing.Bitmap CwmnView {
             get {
                 object obj = ResourceManager.GetObject("CwmnView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CwmnView_32 {
+            get {
+                object obj = ResourceManager.GetObject("CwmnView_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap delete {
+            get {
+                object obj = ResourceManager.GetObject("delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

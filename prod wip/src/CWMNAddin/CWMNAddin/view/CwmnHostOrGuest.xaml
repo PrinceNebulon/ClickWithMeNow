@@ -14,8 +14,8 @@
         </Style>
 
         <Style x:Key="HostButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-            <Setter Property="Margin" Value="16,16,8,16" />
-            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="Margin" Value="8,16,16,16" />
+            <Setter Property="Grid.Column" Value="1" />
             <Setter Property="Content">
                 <Setter.Value>
                     <StackPanel Orientation="Vertical" Margin="6">
@@ -26,8 +26,8 @@
         </Style>
 
         <Style x:Key="ViewButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
-            <Setter Property="Margin" Value="8,16,16,16" />
-            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Margin" Value="16,16,8,16" />
+            <Setter Property="Grid.Column" Value="0" />
             <Setter Property="Content">
                 <Setter.Value>
                     <StackPanel Orientation="Vertical" Margin="6">

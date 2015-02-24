@@ -5,36 +5,89 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:view="clr-namespace:ININ.Alliances.CWMNAddin.view"
              xmlns:viewmodel="clr-namespace:ININ.Alliances.CWMNAddin.viewmodel"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" UseLayoutRounding="True"
              d:DesignHeight="400" d:DesignWidth="500" d:DataContext="{d:DesignInstance viewmodel:CwmnSessionViewModel}">
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="0,0,3,0">
-        <StackPanel Orientation="Vertical">
-            <DockPanel LastChildFill="False">
-                <Label DockPanel.Dock="Left">Session Type</Label>
-                <view:BooleanToggle Value="{Binding Path=SimpleSessionType}"
-                                    DockPanel.Dock="Right" Width="80"
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="3">
+        <DockPanel LastChildFill="False">
+            <!-- Session Type -->
+            <DockPanel Dock="Top" LastChildFill="False">
+                <Label DockPanel.Dock="Left" FontWeight="Bold">Session Type</Label>
+                <view:BooleanToggle Value="{Binding Path=SimpleSessionType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    DockPanel.Dock="Right" Width="90"
                                     VerticalAlignment="Center" HorizontalAlignment="Right"
-                                    TrueText="Host" TrueColor="#B0C72F" 
-                                    FalseText="View" FalseColor="#B0C72F" />
+                                    TrueText="Host" TrueTextColor="#00395A" TrueColor="#B0C72F" 
+                                    FalseText="View" FalseTextColor="#B0C72F" FalseColor="#00395A" />
             </DockPanel>
-            <DockPanel>
-                <Label DockPanel.Dock="Top" HorizontalAlignment="Left">Select a page:</Label>
-                <DockPanel Margin="10,0,0,0">
+            
+            <!-- URLs -->
+            <DockPanel Dock="Top">
+                <Label DockPanel.Dock="Top" HorizontalAlignment="Left" FontWeight="Bold">Select a page:</Label>
+                <DockPanel Margin="6,0,0,0">
                     <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch">
-                        <Label DockPanel.Dock="Left">URL:</Label>
-                        <Label Content="{Binding ElementName=UrlBox, Path=SelectedItem.Url}" />
+                        <Label DockPanel.Dock="Left" FontWeight="Bold">URL:</Label>
+                        <TextBlock Text="{Binding ElementName=UrlBox, Path=SelectedItem.Url}" TextWrapping="NoWrap" 
+                                   TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
                     </DockPanel>
-                    <ListBox Name="UrlBox" Height="80" ItemsSource="{Binding Path=Urls}"
+                    <ListBox Name="UrlBox" Height="130" ItemsSource="{Binding Path=Urls}"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Path=DisplayText}" HorizontalAlignment="Stretch" TextWrapping="Wrap" 
-                                           Margin="2" />
+                                           Margin="2">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsSelected}" Value="true">
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </DockPanel>
             </DockPanel>
-        </StackPanel>
+            
+            <!-- Buttons -->
+            <Grid Margin="0" DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Margin="4">
+                    <StackPanel Orientation="Horizontal" Margin="4">
+                        <Image Width="32" Height="32" VerticalAlignment="Center">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Source" Value="pack://application:,,,/ININ.Alliances.CWMNAddin;component/Resources/view_32.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=SimpleSessionType, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/ININ.Alliances.CWMNAddin;component/Resources/host_32.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <Label VerticalAlignment="Center" FontSize="16">Start Session</Label>
+                    </StackPanel>
+                </Button>
+
+                <Button Grid.Column="1" Margin="4">
+                    <StackPanel Orientation="Horizontal" Margin="4">
+                        <Image Width="32" Height="32" VerticalAlignment="Center"
+                               Source="pack://application:,,,/ININ.Alliances.CWMNAddin;component/Resources/delete.png"/>
+                        <Label VerticalAlignment="Center" FontSize="16">Cancel</Label>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </DockPanel>
     </ScrollViewer>
 </UserControl>
