@@ -54,31 +54,7 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
 
         public CwmnSessionViewModel()
         {
-            Urls.Add(new UrlViewModel
-            {
-                DisplayText = "Google",
-                Url = "http://google.com"
-            });
-            Urls.Add(new UrlViewModel
-            {
-                DisplayText = "Yahoo",
-                Url = "http://yahoo.com"
-            });
-            Urls.Add(new UrlViewModel
-            {
-                DisplayText = "Interactive Intelligence, inc.",
-                Url = "http://www.inin.com"
-            });
-            Urls.Add(new UrlViewModel
-            {
-                DisplayText = "Long URL",
-                Url = "http://Somesite.com/path/to/page.html?query=string&things=something&whatever=1234"
-            });
-            Urls.Add(new UrlViewModel
-            {
-                DisplayText = "This link has a very long title. It's longer than it really needs to be to get the message across about what the link is for.",
-                Url = "http://NotAnotherUrl.com"
-            });
+            
         }
 
 
