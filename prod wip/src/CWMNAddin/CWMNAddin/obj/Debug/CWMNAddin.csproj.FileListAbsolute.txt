@@ -16,3 +16,4 @@ C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\ININ.Alliances.
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\CWMNAddin.csproj.GenerateResource.Cache
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\ININ.Alliances.CWMNAddin.dll
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\ININ.Alliances.CWMNAddin.pdb
+C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\CWMNAddin.csprojResolveAssemblyReference.cache
