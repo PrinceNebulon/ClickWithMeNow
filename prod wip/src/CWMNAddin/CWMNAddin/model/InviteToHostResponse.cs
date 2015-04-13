@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ININ.Alliances.CWMNAddin.model
 {
-    public enum CwmnSessionType
+    public class InviteToHostResponse
     {
-        None,
-        Host,
-        View,
-        Replay
+        public string GuestLink { get; set; }
+        public string HostLink { get; set; }
     }
 }

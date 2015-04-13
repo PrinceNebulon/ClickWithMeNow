@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
-using ININ.Alliances.CWMNAddin.model;
 using ININ.Alliances.CWMNAddin.viewmodel;
+using ININ.Alliances.CwmnTypeLib;
 
 namespace ININ.Alliances.CWMNAddin.view
 {

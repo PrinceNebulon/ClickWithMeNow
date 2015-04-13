@@ -17,3 +17,7 @@ C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\CWMNAddin.cspro
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\ININ.Alliances.CWMNAddin.dll
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\ININ.Alliances.CWMNAddin.pdb
 C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\obj\Debug\CWMNAddin.csprojResolveAssemblyReference.cache
+C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\bin\Debug\RestSharp.dll
+C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\bin\Debug\RestSharp.xml
+C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\bin\Debug\ININ.Alliances.CwmnTypeLib.dll
+C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CWMNAddin\bin\Debug\ININ.Alliances.CwmnTypeLib.pdb

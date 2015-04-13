@@ -7,6 +7,61 @@
              xmlns:viewmodel="clr-namespace:ININ.Alliances.CWMNAddin.viewmodel"
              mc:Ignorable="d" UseLayoutRounding="True"
              d:DesignHeight="400" d:DesignWidth="500" d:DataContext="{d:DesignInstance viewmodel:CwmnSessionViewModel}">
+    <UserControl.Resources>
+        <Style x:Key="NoChromeButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Margin" Value="3,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="Chrome" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter 
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                Margin="{TemplateBinding Padding}" 
+                                RecognizesAccessKey="True" 
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#ADADAD"/>
+                                <Setter Property="Opacity" TargetName="Chrome" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="UrlButtonStyle" BasedOn="{StaticResource NoChromeButton}" TargetType="Button">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="ToolTip" Value="Open Link" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="pack://application:,,,/ININ.Alliances.CWMNAddin;component/Resources/earth.png" TileMode="None" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CopyButtonStyle" BasedOn="{StaticResource NoChromeButton}" TargetType="Button">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="ToolTip" Value="Copy Link" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="pack://application:,,,/ININ.Alliances.CWMNAddin;component/Resources/documents.png" TileMode="None" Stretch="UniformToFill" AlignmentX="Center" AlignmentY="Center" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="0">
         <DockPanel>
             <Grid DockPanel.Dock="Top" Background="#0E1C2C" Margin="0,0,0,2">
@@ -31,11 +86,13 @@
                     <DockPanel Margin="6,0,0,0">
                         <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch">
                             <Label DockPanel.Dock="Left" FontWeight="Bold">URL:</Label>
-                            <TextBlock Text="{Binding ElementName=UrlBox, Path=SelectedItem.Url}" TextWrapping="NoWrap" 
+                            <TextBlock Text="{Binding Path=SelectedUrl.Url}" TextWrapping="NoWrap" 
                                    TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
                         </DockPanel>
-                        <ListBox Name="UrlBox" Height="130" ItemsSource="{Binding Path=Urls}"
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox Name="UrlBox" Height="130" 
+                                 ItemsSource="{Binding Path=Urls}" 
+                                 SelectedItem="{Binding Path=SelectedUrl}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
@@ -61,6 +118,32 @@
                     </DockPanel>
                 </DockPanel>
 
+                <!-- Guest URL -->
+                <DockPanel Dock="Top" Margin="0,4">
+                    <Label DockPanel.Dock="Left" FontWeight="Bold">Guest Link</Label>
+                    <Button Style="{StaticResource CopyButtonStyle}" DockPanel.Dock="Right" Click="CopyGuestLink_OnClick" />
+                    <Button Style="{StaticResource UrlButtonStyle}" DockPanel.Dock="Right" Click="OpenGuestLink_OnClick" />
+                    <TextBox Background="Transparent"
+                             VerticalAlignment="Center"
+                             BorderThickness="0"
+                             Text="{Binding Path=GuestLink}"
+                             IsReadOnly="True"
+                             TextWrapping="Wrap" />
+                </DockPanel>
+
+                <!-- Host URL -->
+                <DockPanel Dock="Top" Margin="0,4">
+                    <Label DockPanel.Dock="Left" FontWeight="Bold">Host Link</Label>
+                    <Button Style="{StaticResource CopyButtonStyle}" DockPanel.Dock="Right" Click="CopyHostLink_OnClick" />
+                    <Button Style="{StaticResource UrlButtonStyle}" DockPanel.Dock="Right" Click="OpenHostLink_OnClick" />
+                    <TextBox Background="Transparent"
+                             VerticalAlignment="Center"
+                             BorderThickness="0"
+                             Text="{Binding Path=HostLink}"
+                             IsReadOnly="True"
+                             TextWrapping="Wrap" />
+                </DockPanel>
+
                 <!-- Buttons -->
                 <Grid Margin="0" DockPanel.Dock="Bottom">
                     <Grid.ColumnDefinitions>
@@ -68,7 +151,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Margin="4">
+                    <Button Grid.Column="0" Margin="4" Click="StartSession_OnClick">
                         <StackPanel Orientation="Horizontal" Margin="4">
                             <Image Width="32" Height="32" VerticalAlignment="Center">
                                 <Image.Style>
@@ -86,7 +169,7 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Grid.Column="1" Margin="4">
+                    <Button Grid.Column="1" Margin="4" Click="Cancel_OnClick">
                         <StackPanel Orientation="Horizontal" Margin="4">
                             <Image Width="32" Height="32" VerticalAlignment="Center"
                                Source="pack://application:,,,/ININ.Alliances.CWMNAddin;component/Resources/delete.png"/>

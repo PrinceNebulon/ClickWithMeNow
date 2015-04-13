@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ININ.Alliances.CWMNAddin.viewmodel;
 
 namespace ININ.Alliances.CWMNAddin.view
 {
@@ -20,9 +11,86 @@ namespace ININ.Alliances.CWMNAddin.view
     /// </summary>
     public partial class CreateSessionView : UserControl
     {
+        public CwmnSessionViewModel CwmnSession
+        {
+            get { return DataContext as CwmnSessionViewModel; }
+        }
+
         public CreateSessionView()
         {
             InitializeComponent();
+        }
+
+        private void StartSession_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CwmnSession.StartSession();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Window.GetWindow(this).Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void CopyGuestLink_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(CwmnSession.GuestLink);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void OpenGuestLink_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(CwmnSession.GuestLink);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void CopyHostLink_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(CwmnSession.HostLink);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void OpenHostLink_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(CwmnSession.HostLink);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }
