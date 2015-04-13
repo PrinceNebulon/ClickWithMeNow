@@ -22,28 +22,13 @@ namespace ININ.Alliances.CWMNAddin.view
             //TODO: Remove debug URLs and replace with configurable list
             sessionvm.Urls.Add(new UrlViewModel
             {
-                DisplayText = "Google",
-                Url = "http://google.com"
+                DisplayText = "CWMN",
+                Url = "http://clickwithmenow.com"
             });
             sessionvm.Urls.Add(new UrlViewModel
             {
-                DisplayText = "Yahoo",
-                Url = "http://yahoo.com"
-            });
-            sessionvm.Urls.Add(new UrlViewModel
-            {
-                DisplayText = "Interactive Intelligence, inc.",
-                Url = "http://www.inin.com"
-            });
-            sessionvm.Urls.Add(new UrlViewModel
-            {
-                DisplayText = "Long URL",
-                Url = "http://Somesite.com/path/to/page.html?query=string&things=something&whatever=1234"
-            });
-            sessionvm.Urls.Add(new UrlViewModel
-            {
-                DisplayText = "This link has a very long title. It's longer than it really needs to be to get the message across about what the link is for.",
-                Url = "http://NotAnotherUrl.com"
+                DisplayText = "tim dev",
+                Url = "https://tim-cic4su5.dev2000.com/cwmn2/landing.html"
             });
 
             // Set to data context

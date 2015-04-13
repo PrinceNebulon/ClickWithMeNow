@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using ININ.Alliances.CWMNAddin.model;
 using ININ.Alliances.CwmnTypeLib;
+using ININ.InteractionClient.Attributes;
 using RestSharp;
 
 namespace ININ.Alliances.CWMNAddin.viewmodel
@@ -61,16 +62,20 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             {
                 _selectedUrl = value;
                 OnPropertyChanged();
+                OnPropertyChanged("HasSelectedUrl");
             }
         }
+
+        public bool HasSelectedUrl { get { return SelectedUrl != null; } }
 
         public string GuestLink
         {
             get { return _guestLink; }
             set
             {
-                _guestLink = value; 
+                _guestLink = value;
                 OnPropertyChanged();
+                OnPropertyChanged("HasSession");
             }
         }
 
@@ -79,10 +84,13 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             get { return _hostLink; }
             set
             {
-                _hostLink = value; 
+                _hostLink = value;
                 OnPropertyChanged();
+                OnPropertyChanged("HasSession");
             }
         }
+
+        public bool HasSession { get { return !string.IsNullOrEmpty(HostLink) && !string.IsNullOrEmpty(GuestLink); } }
 
         #endregion
 
@@ -179,6 +187,7 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
         {
             try
             {
+                // Get links
                 var response = Execute<InviteToHostResponse>(Method.GET, "/session/inviteToHost",
                     new Parameter {Type = ParameterType.GetOrPost, Name = "hostName", Value = "A Host"},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "hostEmail", Value = "fakehost@fakedomianneam.com"},
@@ -186,11 +195,20 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
                     new Parameter {Type = ParameterType.GetOrPost, Name = "guestEmail", Value = "fakeguest@fakedomianneam.com"},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "url", Value = SelectedUrl.Url},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "screenDomain", Value = "tim-cic4su5.dev2000.com"});
-                //if (!string.IsNullOrEmpty(response.HostLink)) Process.Start(response.HostLink);
-                Console.WriteLine("HostLink: " + response.HostLink);
-                Console.WriteLine("GuestLink: " + response.GuestLink);
-                GuestLink = response.GuestLink;
-                HostLink = response.HostLink;
+
+                // Quietly set the links to prevent multiple checks on HasSession
+                _guestLink = response.GuestLink;
+                _hostLink = response.HostLink;
+
+                // Raise changed notifications
+                OnPropertyChanged("GuestLink");
+                OnPropertyChanged("HostLink");
+                OnPropertyChanged("HasSession");
+
+                // Launch the appropriate link
+                Process.Start(SessionType == CwmnSessionType.Host
+                    ? HostLink
+                    : GuestLink);
             }
             catch (Exception ex)
             {
