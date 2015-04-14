@@ -100,6 +100,13 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
         {
             _client = new RestClient(ApiUrl);
             _interaction = interaction;
+
+            // Get guest name
+            if (!string.IsNullOrEmpty(CwmnButton.GuestNameAttribute))
+                _guestName = _interaction.GetStringAttribute(CwmnButton.GuestNameAttribute);
+            if (string.IsNullOrEmpty(_guestName))
+                _guestName = !string.IsNullOrEmpty(CwmnButton.GuestName) ? CwmnButton.GuestName : "Agent";
+            
         }
 
 
