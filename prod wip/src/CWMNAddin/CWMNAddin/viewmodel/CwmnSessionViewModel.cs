@@ -174,12 +174,37 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             {
                 // Get links
                 var response = Execute<InviteToHostResponse>(Method.GET, "/session/inviteToHost",
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "hostName", Value = CwmnButton.AgentName},
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "hostEmail", Value = CwmnButton.AgentEmail},
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "guestName", Value = _guestName},
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "guestEmail", Value = _guestEmail},
+                    new Parameter
+                    {
+                        Type = ParameterType.GetOrPost,
+                        Name = "hostName",
+                        Value = SessionType == CwmnSessionType.Host ? CwmnButton.AgentName : _guestName
+                    },
+                    new Parameter
+                    {
+                        Type = ParameterType.GetOrPost,
+                        Name = "hostEmail",
+                        Value = SessionType == CwmnSessionType.Host ? CwmnButton.AgentEmail : _guestEmail
+                    },
+                    new Parameter
+                    {
+                        Type = ParameterType.GetOrPost,
+                        Name = "guestName",
+                        Value = SessionType == CwmnSessionType.Host ? _guestName : CwmnButton.AgentName
+                    },
+                    new Parameter
+                    {
+                        Type = ParameterType.GetOrPost,
+                        Name = "guestEmail",
+                        Value = SessionType == CwmnSessionType.Host ? _guestName : CwmnButton.AgentName
+                    },
                     new Parameter {Type = ParameterType.GetOrPost, Name = "url", Value = SelectedUrl.Url},
-                    new Parameter { Type = ParameterType.GetOrPost, Name = "screenDomain", Value = CwmnButton.ScreenDomain});
+                    new Parameter
+                    {
+                        Type = ParameterType.GetOrPost,
+                        Name = "screenDomain",
+                        Value = CwmnButton.ScreenDomain
+                    });
 
                 // Quietly set the links to prevent multiple checks on HasSession
                 _guestLink = response.GuestLink;

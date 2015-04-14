@@ -13,16 +13,16 @@ namespace ININ.Alliances.CWMNAddin.view
     {
         private CwmnSessionViewModel ViewModel { get { return DataContext as CwmnSessionViewModel; } }
 
-#if DEBUG
-        //TODO: Remove this
-        public CwmnDialog()
-        {
-            InitializeComponent();
+//#if DEBUG
+//        //TODO: Remove this
+//        public CwmnDialog()
+//        {
+//            InitializeComponent();
 
-            var x = new CwmnAddin();
-            x.Load(null);
-        }
-#endif
+//            var x = new CwmnAddin();
+//            x.Load(null);
+//        }
+//#endif
 
         public CwmnDialog(Interaction interaction)
         {

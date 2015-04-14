@@ -19,20 +19,13 @@ namespace ININ.Alliances.CWMNAddin
 
                 if (session == null)
                 {
-#if DEBUG
-                    session = new Session();
-                    session.Connect(new SessionSettings(), 
-                        new HostSettings(new HostEndpoint("tim-cic4su5.dev2000.com")),
-                        new ICAuthSettings("tim.awesome", "1234"), 
-                        new StationlessSettings());
-                    var x = new CwmnButton(session);
-#endif
+                    throw new Exception("Failed to get session!");
                 }
-#if !DEBUG
+
+                // Add CWMN button
                 var service = ServiceLocator.Current.GetInstance<IClientInteractionButtonService>();
                 if (service == null) throw new Exception("Unable to locate IClientInteractionButtonService service.");
                 service.Add(new CwmnButton(session));
-#endif
             }
             catch (Exception ex)
             {
