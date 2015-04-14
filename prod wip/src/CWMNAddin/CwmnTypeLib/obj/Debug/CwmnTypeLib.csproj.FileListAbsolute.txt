@@ -1,4 +1,0 @@
-C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CwmnTypeLib\bin\Debug\ININ.Alliances.CwmnTypeLib.dll
-C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CwmnTypeLib\bin\Debug\ININ.Alliances.CwmnTypeLib.pdb
-C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CwmnTypeLib\obj\Debug\ININ.Alliances.CwmnTypeLib.dll
-C:\git\ClickWithMeNow\prod wip\src\CWMNAddin\CwmnTypeLib\obj\Debug\ININ.Alliances.CwmnTypeLib.pdb
