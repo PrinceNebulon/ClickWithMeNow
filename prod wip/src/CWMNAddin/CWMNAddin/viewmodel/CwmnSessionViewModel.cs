@@ -169,7 +169,7 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
                 // Get links
                 var response = Execute<InviteToHostResponse>(Method.GET, "/session/inviteToHost",
                     new Parameter {Type = ParameterType.GetOrPost, Name = "hostName", Value = CwmnButton.AgentName},
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "hostEmail", Value = "fakehost@fakedomianneam.com"},
+                    new Parameter {Type = ParameterType.GetOrPost, Name = "hostEmail", Value = CwmnButton.AgentEmail},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "guestName", Value = _guestName},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "guestEmail", Value = "fakeguest@fakedomianneam.com"},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "url", Value = SelectedUrl.Url},

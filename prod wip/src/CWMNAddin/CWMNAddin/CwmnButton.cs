@@ -59,6 +59,7 @@ namespace ININ.Alliances.CWMNAddin
         public static string GuestName { get; private set; }
         public static string GuestNameAttribute { get; private set; }
         public static string AgentName { get; private set; }
+        public static string AgentEmail { get; private set; }
         public static string ScreenDomain { get; private set; }
 
 
@@ -168,17 +169,21 @@ namespace ININ.Alliances.CWMNAddin
                 });
             }
 
+            // Get agent email settings
+            var agentEmail = GetParameterValueString(hootsuiteConfig.Parameters.Value, "agent email");
+            var agentEmailFromMailbox = GetParameterValueString(hootsuiteConfig.Parameters.Value, "agent email from mailbox");
+
             // Stop caching
             configList.StopCaching();
 
-            //TODO: Get agent name
-            AgentName = GetAgentName();
+            // Get agent info
+            GetAgentInfo(agentEmail, agentEmailFromMailbox);
 
             // Done
             _isInitialized = true;
         }
 
-        private string GetAgentName()
+        private void GetAgentInfo(string agentEmail, string agentEmailFromMailbox)
         {
             // Create list
             var userConfigurationList = new UserConfigurationList(ConfigurationManager.GetInstance(_session));
@@ -186,7 +191,8 @@ namespace ININ.Alliances.CWMNAddin
             // Create query
             var query = userConfigurationList.CreateQuerySettings();
             query.SetPropertiesToRetrieve(UserConfiguration.Property.Id,
-                UserConfiguration.Property.Mailbox_DisplayName);
+                UserConfiguration.Property.Mailbox_DisplayName,
+                UserConfiguration.Property.Mailbox_EmailAddress);
             query.SetRightsFilter(UserConfiguration.Rights.LoggedInUser);
             query.SetFilterDefinition(UserConfiguration.Property.Id, _session.UserId);
 
@@ -200,11 +206,35 @@ namespace ININ.Alliances.CWMNAddin
                     u =>
                         u.ConfigurationId.Id.ToString()
                             .Equals(_session.UserId, StringComparison.InvariantCultureIgnoreCase));
+
+            if (user == null)
+            {
+                AgentName = "Agent";
+                AgentEmail = "fakehost@fakedomianneam.com";
+                return;
+            }
             
-            // Return default or name (the display name is always the mailbox name even if there is no mailbox)
-            return user == null || string.IsNullOrEmpty(user.Mailbox.DisplayName.Value)
+            // Set name (the display name is always the mailbox name even if there is no mailbox)
+            AgentName = string.IsNullOrEmpty(user.Mailbox.DisplayName.Value)
                 ? "Agent"
                 : user.Mailbox.DisplayName.Value;
+
+            // Get email
+            var useMailbox = false;
+            if (bool.TryParse(agentEmailFromMailbox, out useMailbox))
+            {
+                if (useMailbox)
+                {
+                    AgentEmail = user.Mailbox.EmailAddress.Value;
+                }
+            }
+            if (string.IsNullOrEmpty(AgentEmail))
+            {
+                AgentEmail = string.IsNullOrEmpty(agentEmail) ? "fakehost@fakedomianneam.com" : agentEmail;
+            }
+
+            // Stop caching
+            userConfigurationList.StopCaching();
         }
 
         private string GetParameterValueString(IEnumerable<StructuredParameter> parameters, string valueName, string defaultValue = "")
