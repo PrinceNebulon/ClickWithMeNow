@@ -58,10 +58,11 @@ namespace ININ.Alliances.CWMNAddin
         public static List<UrlViewModel> Urls = new List<UrlViewModel>();
         public static string GuestName { get; private set; }
         public static string GuestNameAttribute { get; private set; }
+        public static string GuestEmail { get; private set; }
+        public static string GuestEmailAttribute { get; private set; }
         public static string AgentName { get; private set; }
         public static string AgentEmail { get; private set; }
         public static string ScreenDomain { get; private set; }
-
 
         #endregion
 
@@ -141,6 +142,33 @@ namespace ININ.Alliances.CWMNAddin
                 // Found guest name attribute
                 GuestName = "";
                 GuestNameAttribute = guestNameAttribute;
+            }
+
+            // Get guest email attribute
+            var guestEmailAttribute = GetParameterValueString(hootsuiteConfig.Parameters.Value, "guest email attribute");
+            if (string.IsNullOrEmpty(guestNameAttribute))
+            {
+                // Get guest name
+                var guestEmail = GetParameterValueString(hootsuiteConfig.Parameters.Value, "guest email");
+
+                if (string.IsNullOrEmpty(guestEmail))
+                {
+                    // Don't have guest email
+                    GuestEmail = "Guest";
+                    GuestEmailAttribute = "";
+                }
+                else
+                {
+                    // Found guest name
+                    GuestEmail = guestEmail;
+                    GuestEmailAttribute = "";
+                }
+            }
+            else
+            {
+                // Found guest name attribute
+                GuestEmail = "";
+                GuestEmailAttribute = guestEmailAttribute;
             }
 
             // Get screen domain
@@ -225,6 +253,7 @@ namespace ININ.Alliances.CWMNAddin
             {
                 if (useMailbox)
                 {
+                    // NOTE: This is only valid for IMAP/SMTP mailboxes! Exchange or IMS will return NULL
                     AgentEmail = user.Mailbox.EmailAddress.Value;
                 }
             }

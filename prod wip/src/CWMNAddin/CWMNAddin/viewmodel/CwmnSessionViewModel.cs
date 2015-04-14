@@ -22,6 +22,7 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
         private string _hostLink;
         private Interaction _interaction;
         private string _guestName;
+        private string _guestEmail;
 
         #endregion
 
@@ -105,8 +106,13 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             if (!string.IsNullOrEmpty(CwmnButton.GuestNameAttribute))
                 _guestName = _interaction.GetStringAttribute(CwmnButton.GuestNameAttribute);
             if (string.IsNullOrEmpty(_guestName))
-                _guestName = !string.IsNullOrEmpty(CwmnButton.GuestName) ? CwmnButton.GuestName : "Agent";
-            
+                _guestName = !string.IsNullOrEmpty(CwmnButton.GuestName) ? CwmnButton.GuestName : "Guest";
+
+            // Get guest email
+            if (!string.IsNullOrEmpty(CwmnButton.GuestEmailAttribute))
+                _guestEmail = _interaction.GetStringAttribute(CwmnButton.GuestEmailAttribute);
+            if (string.IsNullOrEmpty(_guestEmail))
+                _guestEmail = !string.IsNullOrEmpty(CwmnButton.GuestEmail) ? CwmnButton.GuestEmail : "fakeguest@fakedomianneam.com";
         }
 
 
@@ -171,7 +177,7 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
                     new Parameter {Type = ParameterType.GetOrPost, Name = "hostName", Value = CwmnButton.AgentName},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "hostEmail", Value = CwmnButton.AgentEmail},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "guestName", Value = _guestName},
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "guestEmail", Value = "fakeguest@fakedomianneam.com"},
+                    new Parameter {Type = ParameterType.GetOrPost, Name = "guestEmail", Value = _guestEmail},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "url", Value = SelectedUrl.Url},
                     new Parameter { Type = ParameterType.GetOrPost, Name = "screenDomain", Value = CwmnButton.ScreenDomain});
 
