@@ -1,4 +1,4 @@
-﻿namespace ININ.Alliances.CwmnTypeLib
+﻿namespace ININ.Alliances.CWMNAddin.model
 {
     public enum CwmnSessionType
     {

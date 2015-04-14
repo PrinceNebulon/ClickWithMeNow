@@ -172,10 +172,39 @@ namespace ININ.Alliances.CWMNAddin
             configList.StopCaching();
 
             //TODO: Get agent name
-            AgentName = "Fred Flinstone";
+            AgentName = GetAgentName();
 
             // Done
             _isInitialized = true;
+        }
+
+        private string GetAgentName()
+        {
+            // Create list
+            var userConfigurationList = new UserConfigurationList(ConfigurationManager.GetInstance(_session));
+
+            // Create query
+            var query = userConfigurationList.CreateQuerySettings();
+            query.SetPropertiesToRetrieve(UserConfiguration.Property.Id,
+                UserConfiguration.Property.Mailbox_DisplayName);
+            query.SetRightsFilter(UserConfiguration.Rights.LoggedInUser);
+            query.SetFilterDefinition(UserConfiguration.Property.Id, _session.UserId);
+
+            // Get list
+            userConfigurationList.StartCaching(query);
+            var userList = userConfigurationList.GetConfigurationList();
+            
+            // Get user
+            var user =
+                userList.FirstOrDefault(
+                    u =>
+                        u.ConfigurationId.Id.ToString()
+                            .Equals(_session.UserId, StringComparison.InvariantCultureIgnoreCase));
+            
+            // Return default or name (the display name is always the mailbox name even if there is no mailbox)
+            return user == null || string.IsNullOrEmpty(user.Mailbox.DisplayName.Value)
+                ? "Agent"
+                : user.Mailbox.DisplayName.Value;
         }
 
         private string GetParameterValueString(IEnumerable<StructuredParameter> parameters, string valueName, string defaultValue = "")

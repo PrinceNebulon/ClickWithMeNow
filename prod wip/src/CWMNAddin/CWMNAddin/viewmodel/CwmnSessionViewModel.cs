@@ -2,11 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
-using System.Windows;
 using ININ.Alliances.CWMNAddin.model;
-using ININ.Alliances.CwmnTypeLib;
 using ININ.IceLib.Interactions;
-using ININ.InteractionClient.Attributes;
 using RestSharp;
 
 namespace ININ.Alliances.CWMNAddin.viewmodel

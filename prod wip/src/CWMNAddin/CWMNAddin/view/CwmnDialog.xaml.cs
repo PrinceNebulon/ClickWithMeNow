@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
+using ININ.Alliances.CWMNAddin.model;
 using ININ.Alliances.CWMNAddin.viewmodel;
-using ININ.Alliances.CwmnTypeLib;
 using ININ.IceLib.Interactions;
 
 namespace ININ.Alliances.CWMNAddin.view
@@ -13,9 +13,26 @@ namespace ININ.Alliances.CWMNAddin.view
     {
         private CwmnSessionViewModel ViewModel { get { return DataContext as CwmnSessionViewModel; } }
 
+#if DEBUG
+        //TODO: Remove this
+        public CwmnDialog()
+        {
+            InitializeComponent();
+
+            var x = new CwmnAddin();
+            x.Load(null);
+        }
+#endif
+
         public CwmnDialog(Interaction interaction)
         {
             InitializeComponent();
+
+            Initialize(interaction);
+        }
+
+        private void Initialize(Interaction interaction)
+        {
             try
             {
                 // Create new session vm

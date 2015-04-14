@@ -1,4 +1,4 @@
-﻿namespace ININ.Alliances.CwmnTypeLib.model
+﻿namespace ININ.Alliances.CWMNAddin.model
 {
     public class UrlModel
     {

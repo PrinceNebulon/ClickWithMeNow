@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using ININ.Alliances.CwmnTypeLib;
+using ININ.Alliances.CWMNAddin.model;
 
 namespace ININ.Alliances.CWMNAddin.view
 {
