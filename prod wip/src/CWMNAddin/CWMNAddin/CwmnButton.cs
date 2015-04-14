@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Documents;
@@ -58,6 +59,7 @@ namespace ININ.Alliances.CWMNAddin
         public static string GuestName { get; private set; }
         public static string GuestNameAttribute { get; private set; }
         public static string AgentName { get; private set; }
+        public static string ScreenDomain { get; private set; }
 
 
         #endregion
@@ -93,8 +95,14 @@ namespace ININ.Alliances.CWMNAddin
             // Create query settings
             var query = configList.CreateQuerySettings();
             query.SetPropertiesToRetrieveToAll();
+            query.SetRightsFilterToView();
 
             // Get list
+            /* NOTE: Most environments only have a couple structured parameters, so it's more efficient to 
+             * retrieve all of them in one request than to do seperate queries for each. If an environment 
+             * has a lot of structured parameters and this is causing performance issues, this can be 
+             * rewritten to query for each individually.
+             */
             configList.StartCaching(query);
             var parameterConfigurationList = configList.GetConfigurationList();
 
@@ -108,23 +116,13 @@ namespace ININ.Alliances.CWMNAddin
                 throw new Exception("Unable to retrieve Hootsuite configuration!");
 
             // Get guest name attribute
-            var guestNameAttribute =
-                hootsuiteConfig.Parameters.Value.FirstOrDefault(
-                    p => p.Name.Equals("guest name attribute", StringComparison.InvariantCultureIgnoreCase));
-            if (guestNameAttribute == null
-                || guestNameAttribute.ParameterType != StructuredParameterType.String
-                || guestNameAttribute.Values.Count == 0
-                || string.IsNullOrEmpty(guestNameAttribute.Values[0]))
+            var guestNameAttribute = GetParameterValueString(hootsuiteConfig.Parameters.Value, "guest name attribute");
+            if (string.IsNullOrEmpty(guestNameAttribute))
             {
                 // Get guest name
-                var guestName =
-                    hootsuiteConfig.Parameters.Value.FirstOrDefault(
-                        p => p.Name.Equals("guest name", StringComparison.InvariantCultureIgnoreCase));
+                var guestName = GetParameterValueString(hootsuiteConfig.Parameters.Value, "guest name");
 
-                if (guestName == null
-                    || guestName.ParameterType != StructuredParameterType.String
-                    || guestName.Values.Count == 0
-                    || string.IsNullOrEmpty(guestName.Values[0]))
+                if (string.IsNullOrEmpty(guestName))
                 {
                     // Don't have guest name
                     GuestName = "Guest";
@@ -133,7 +131,7 @@ namespace ININ.Alliances.CWMNAddin
                 else
                 {
                     // Found guest name
-                    GuestName = guestName.Values[0];
+                    GuestName = guestName;
                     GuestNameAttribute = "";
                 }
             }
@@ -141,9 +139,13 @@ namespace ININ.Alliances.CWMNAddin
             {
                 // Found guest name attribute
                 GuestName = "";
-                GuestNameAttribute = guestNameAttribute.Values[0];
+                GuestNameAttribute = guestNameAttribute;
             }
 
+            // Get screen domain
+            ScreenDomain = GetParameterValueString(hootsuiteConfig.Parameters.Value, "screen domain");
+            if (string.IsNullOrEmpty(ScreenDomain))
+                throw new Exception("Unable to retrieve screen domain!");
 
             // Find hootsuite URLS parameter
             var hootsuiteUrls =
@@ -174,6 +176,21 @@ namespace ININ.Alliances.CWMNAddin
 
             // Done
             _isInitialized = true;
+        }
+
+        private string GetParameterValueString(IEnumerable<StructuredParameter> parameters, string valueName, string defaultValue = "")
+        {
+            // Get parameter
+            var parameter =
+                parameters.FirstOrDefault(p => p.Name.Equals(valueName, StringComparison.InvariantCultureIgnoreCase));
+
+            // Return default or value
+            return parameter == null
+                   || parameter.ParameterType != StructuredParameterType.String
+                   || parameter.Values.Count == 0
+                   || string.IsNullOrEmpty(parameter.Values[0])
+                ? defaultValue
+                : parameter.Values[0];
         }
 
         #endregion

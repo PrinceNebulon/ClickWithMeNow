@@ -109,7 +109,6 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
 
         #region Private Methods
 
-
         private T Execute<T>(Method method, string resource, params Parameter[] parameters) where T : new()
         {
             // Create request
@@ -148,6 +147,11 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             return response.Data;
         }
 
+        public static bool IsStatusCodeSuccess(HttpStatusCode code)
+        {
+            return (int)code >= 200 && (int)code < 300;
+        }
+
         #endregion
 
 
@@ -160,12 +164,12 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             {
                 // Get links
                 var response = Execute<InviteToHostResponse>(Method.GET, "/session/inviteToHost",
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "hostName", Value = "A Host"},
+                    new Parameter {Type = ParameterType.GetOrPost, Name = "hostName", Value = CwmnButton.AgentName},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "hostEmail", Value = "fakehost@fakedomianneam.com"},
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "guestName", Value = "A Guest"},
+                    new Parameter {Type = ParameterType.GetOrPost, Name = "guestName", Value = _guestName},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "guestEmail", Value = "fakeguest@fakedomianneam.com"},
                     new Parameter {Type = ParameterType.GetOrPost, Name = "url", Value = SelectedUrl.Url},
-                    new Parameter {Type = ParameterType.GetOrPost, Name = "screenDomain", Value = "tim-cic4su5.dev2000.com"});
+                    new Parameter { Type = ParameterType.GetOrPost, Name = "screenDomain", Value = CwmnButton.ScreenDomain});
 
                 // Quietly set the links to prevent multiple checks on HasSession
                 _guestLink = response.GuestLink;
@@ -185,11 +189,6 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             {
                 Console.WriteLine(ex);
             }
-        }
-
-        public static bool IsStatusCodeSuccess(HttpStatusCode code)
-        {
-            return (int)code >= 200 && (int)code < 300;
         }
 
         #endregion
