@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows;
 using ININ.Alliances.CWMNAddin.model;
 using ININ.Alliances.CwmnTypeLib;
+using ININ.IceLib.Interactions;
 using ININ.InteractionClient.Attributes;
 using RestSharp;
 
@@ -22,6 +23,8 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
         private readonly RestClient _client;
         private string _guestLink;
         private string _hostLink;
+        private Interaction _interaction;
+        private string _guestName;
 
         #endregion
 
@@ -96,9 +99,10 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
 
 
 
-        public CwmnSessionViewModel()
+        public CwmnSessionViewModel(Interaction interaction)
         {
             _client = new RestClient(ApiUrl);
+            _interaction = interaction;
         }
 
 
@@ -142,39 +146,6 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
 
             // Return data object
             return response.Data;
-        }
-
-        private HttpStatusCode Execute(Method method, string resource, params Parameter[] parameters)
-        {
-            // Create request
-            var request = new RestRequest(resource, method);
-
-            // Add standard headers
-            request.AddHeader("Authorization", Authorization);
-
-            // Add passed in parameters
-            foreach (var parameter in parameters)
-            {
-                // Skip these params; we don't support them being overridden
-                if (!string.IsNullOrEmpty(parameter.Name) &&
-                    (parameter.Name.Equals("Authorization", StringComparison.InvariantCultureIgnoreCase) ||
-                    parameter.Name.Equals("Content-Type", StringComparison.InvariantCultureIgnoreCase)))
-                    continue;
-
-                // Add parameters
-                request.AddParameter(parameter);
-            }
-
-            // Execute request and get response
-            var response = _client.Execute(request);
-
-            // Check for transport error (this is NOT a HTTP error status)
-            if (response.ErrorException != null)
-                throw new ApplicationException("Error retrieving response. Check inner details for more info.",
-                    response.ErrorException);
-
-            // Return data object
-            return response.StatusCode;
         }
 
         #endregion

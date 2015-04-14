@@ -35,5 +35,10 @@
                 OnPropertyChanged();
             }
         }
+
+        public override string ToString()
+        {
+            return DisplayText + (IsSelected ? "*" : "") + " - " + Url;
+        }
     }
 }

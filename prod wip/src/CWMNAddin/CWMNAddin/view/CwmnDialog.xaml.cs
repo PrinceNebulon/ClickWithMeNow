@@ -2,6 +2,7 @@
 using System.Windows;
 using ININ.Alliances.CWMNAddin.viewmodel;
 using ININ.Alliances.CwmnTypeLib;
+using ININ.IceLib.Interactions;
 
 namespace ININ.Alliances.CWMNAddin.view
 {
@@ -12,27 +13,31 @@ namespace ININ.Alliances.CWMNAddin.view
     {
         private CwmnSessionViewModel ViewModel { get { return DataContext as CwmnSessionViewModel; } }
 
-        public CwmnDialog()
+        public CwmnDialog(Interaction interaction)
         {
             InitializeComponent();
-
-            // Create new session vm
-            var sessionvm = new CwmnSessionViewModel();
-
-            //TODO: Remove debug URLs and replace with configurable list
-            sessionvm.Urls.Add(new UrlViewModel
+            try
             {
-                DisplayText = "CWMN",
-                Url = "http://clickwithmenow.com"
-            });
-            sessionvm.Urls.Add(new UrlViewModel
-            {
-                DisplayText = "tim dev",
-                Url = "https://tim-cic4su5.dev2000.com/cwmn2/landing.html"
-            });
+                // Create new session vm
+                var sessionvm = new CwmnSessionViewModel(interaction);
 
-            // Set to data context
-            DataContext = sessionvm;
+                // Add urls to VM
+                foreach (var url in CwmnButton.Urls)
+                {
+                    // Make sure it doesn't think it's selected
+                    url.IsSelected = false;
+
+                    // Add to list
+                    sessionvm.Urls.Add(url);
+                }
+
+                // Set to data context
+                DataContext = sessionvm;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private void OnSessionTypeSelected(CwmnSessionType sessiontype)
