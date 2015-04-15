@@ -1,87 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- BypassLoginForm/chatOrCallback.html?chatUsername={name} -->
-	<script type="text/javascript" src="/cwmn/jquery-2.1.1.js"></script>
+	<script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="scripts/cwmn-config.js"></script>
+	<script type="text/javascript" src="scripts/cwmn-interface.js"></script>
     <script type="text/javascript">
-        var cwmnInstance;
-        var chatWindow;
-        var pubLink;
-
         function Setup() {
-
             // start chat
             document.getElementById('chatiframe').src = 'chat/BypassLoginForm/chatOrCallback.html?chatUsername='+getParameterByName('chatUsername');
         }
-
-        // Show methods
-        function invokeShowHome() {
-        	console.debug('invokeShowHome');
-        	showAnAgent('http://tim-cic4su5.dev2000.com/cwmn/index.html');
-        }
-
-        function invokeShowRegisterDemo() {
-        	console.debug('invokeShowRegisterDemo');
-        	showAnAgent('http://tim-cic4su5.dev2000.com/cwmn/demo2.html');
-        }
-
-        function invokeShowPressReleases() {
-        	console.debug('invokeShowPressReleases');
-        	showAnAgent('http://tim-cic4su5.dev2000.com/cwmn/pr.html');
-        }
-
-        // See methods
-        function invokeSeeHome() {
-        	console.debug('invokeSeeHome');
-        	inviteAgentToHost('http://tim-cic4su5.dev2000.com/cwmn/index.html');
-        }
-
-        function invokeSeeRegisterDemo() {
-        	console.debug('invokeSeeRegisterDemo');
-        	inviteAgentToHost('http://tim-cic4su5.dev2000.com/cwmn/demo2.html');
-        }
-
-
-        function invokeSeePressReleases() {
-        	console.debug('invokeSeePressReleases');
-        	inviteAgentToHost('http://tim-cic4su5.dev2000.com/cwmn/pr.html');
-        }
-
-        function inviteAgentToHost(url) {
-        	console.debug('sendInviteToHost');
-			cwmnInstance.sessionAPI.inviteToHost({
-				hostName: getParameterByName('chatUsername'),
-				hostEmail: 'noreply@inin.com',
-				inviteName: 'Agent',
-				inviteEmail: 'noreply@inin.com',
-				message: 'no message',
-				url: url
-			}, function(result) {
-        		console.debug(JSON.stringify(result));
-				sendToChat('https://ms.clickwith.me/host/' + result.screen.screenId);
-				window.open(result.inviteLink);
-			}, function(error) {
-        		console.error(JSON.stringify(error));
-			});
-		}
-
-        function showAnAgent(url) {
-        	console.debug('sendInviteToHost');
-			cwmnInstance.sessionAPI.inviteToHost({
-				hostName: getParameterByName('chatUsername'),
-				hostEmail: 'noreply@inin.com',
-				inviteName: 'Agent',
-				inviteEmail: 'noreply@inin.com',
-				message: 'no message',
-				url: url
-			}, function(result) {
-        		console.debug(JSON.stringify(result));
-				sendToChat(result.inviteLink);
-				window.open('https://ms.clickwith.me/host/' + result.screen.screenId);
-			}, function(error) {
-        		console.error(JSON.stringify(error));
-			});
-		}
 
 		function sendToChat(message) {
 			$('#chatiframe').contents().find('#inputPanel').val(message);
@@ -95,110 +22,121 @@
             return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
+		$(document).ready(function(){
+			populateMenuOptions($('#HostOptionList'), cwmnHostOptions, 'getHostLink');
+			populateMenuOptions($('#GuestOptionList'), cwmnGuestOptions, 'getGuestLink');
+		});
 
+		var globalListIndex = 0;
+		function populateMenuOptions(listElement, options, invocationFunctionName) {
+			$.each(options, function (index, value){
+				// Generate element ID
+				globalListIndex++;
+				var elementId = 'hoverListItem' + globalListIndex;
 
+				// Add item to list
+				listElement.append('<li id="' + elementId + '"><a href="#" alt="' + value.description + '" onclick="' + invocationFunctionName + '(\'' + value.url + '\')">' + value.text + '<span class="linkHoverText">Click to launch</span></a><div class="linkDescription">' + value.description + '</div></li>');
+					console.debug($('#hostLink' + index));
 
-            
-        function startCwmnSession() {
-            cwmnInstance.sessionAPI.initializeScreen({
-                hostName: 'T-host',
-                hostEmail: 'tim.smith@inin.com'
-            }, function() {
-                cwmnInstance.publicLink.activate();
-                pubLink = cwmnInstance.publicLink.generate();
-                cwmnInstance.UI.startHosting();
-                SetLink();
-            });
-        }
-
-        function SetLink() {
-            var inSession = cwmnInstance.userData.screenId != '';
-            if (!inSession) return;
-			$('#chatiframe').contents().find('#inputPanel').val(pubLink);
-            setTimeout(function() { $('#chatiframe').contents().find('#sendButton').click(); }, 500);
-        }
-
-        function InviteToUrl(){
-        	cwmnInstance.sessionAPI.inviteToHost({
-				hostName: 'Customer Host',
-				hostEmail: 'noreply@clickwithmenow.com',
-				inviteName: 'Agent Guest',
-				inviteEmail: 'tim.smith@inin.com',
-				message: 'plz join',
-				url: 'http://tim-cic4su5.dev2000.com/cwmn/index.html'
-			}, function(result) {
-				var successNotification = d.createElement('div');
-				var link = '<a href="' + result.inviteLink + '" target="_blank">' + result.inviteLink + '</a>';
-				successNotification.innerHTML = 'Invite sent. Go to ' + link + ' to view the host\'s screen.';
-				successNotification.className = 'alert alert-success';
-				ithNotifications.appendChild(successNotification);
-				console.log(result);
-			}, function(error) {
-				
-			});
-        }
-</script>
-	<script type="text/javascript">
-		// Define the link options here
-		var cwmnHostOptions = [
-				{
-					text: 'Google',
-					description: 'When you need a question answered and aren\'t quite lazy enough to ask someone else... Google!',
-					url: 'http://google.com'
-				},
-				{
-					text: 'Bing',
-					description: 'It\'s Bing, not Ding.',
-					url: 'http://bing.com'
-				}
-			];
-		var cwmnGuestOptions = [
-				{
-					text: 'Interactive Intelligence',
-					description: 'Interacting Intelligently',
-					url: 'http://inin.com'
-				},
-				{
-					text: 'Click With Me Now',
-					description: 'Now, click with me you will',
-					url: 'http://clickwithmenow.com/'
-				}
-			];
-
-			$(document).ready(function(){
-				$.each(cwmnHostOptions, function (index, value){
-					// Add item to list
-					$('#HostOptionList').append('<li id="hostLink' + index + '"><a href="#" alt="' + value.description + '" onclick="invokeHostLink(\'' + value.url + '\')">' + value.text + '<span class="hostLinkHoverText">Click to launch</span></a><div class="hostLinkDescription">' + value.description + '</div></li>');
-						console.debug($('#hostLink' + index));
-
-					// Hover in/out
-					$('#hostLink' + index).hover(function(){
-						// Mouse in
-						console.debug('hover in');
-						$(this).find('.hostLinkHoverText').css('display','inline');
-						$(this).find('.hostLinkDescription').slideDown({
-							duration: 70,
-							queue: false
-						});
-					},function(){
-						// Mouse out
-						console.debug('hover out');
-						$(this).find('.hostLinkHoverText').css('display','none');
-						$(this).find('.hostLinkDescription').slideUp();
+				// Hover in/out
+				$('#' + elementId).hover(function(){
+					// Mouse in
+					$(this).find('.linkHoverText').css('display','inline');
+					$(this).find('.linkDescription').slideDown({
+						duration: 70,
+						queue: false
 					});
-				});
-				$.each(cwmnGuestOptions, function (index, value){
-					$('#GuestOptionList').append('<li><a id="guestLink' + index + '" href="#" alt="' + value.description + '" onclick="invokeGuestLink(\'' + value.url + '\')">' + value.text + '</a></li>');
+				},function(){
+					// Mouse out
+					$(this).find('.linkHoverText').css('display','none');
+					$(this).find('.linkDescription').slideUp();
 				});
 			});
+		}
 
-			function invokeHostLink(url){
-				console.debug('Host link: ' + url);
-			}
+		function getHostLink(url){
+			console.debug('Host link: ' + url);
+			console.debug(apiUrl);
+			$.ajax({
+				crossDomain: true,
+				data: {
+					hostName: getParameterByName('chatUsername'),
+					hostEmail: 'fakehost@aiuvhniaunakjsfhajkdfsh.com',
+					guestName: 'Guest Agent',
+					guestEmail: 'fakeguest@aiuvhniaunakjsfhajkdfsh.com',
+					url: url,
+					screenDomain: screenDomain
+				},
+				error: getHostLinkError,
+				headers: {
+					Authorization: authorizationHeader
+				},
+				method: 'GET',
+				success: getHostLinkSuccess,
+				url: apiUrl
+			});
+		}
+		function getHostLinkSuccess(data, textStatus, jqXHR) {
+			console.group('getHostLinkSuccess');
+			console.debug(data);
+			console.debug(textStatus);
+			console.debug(jqXHR);
+			console.groupEnd();
 
-			function invokeGuestLink(url){
-				console.debug('Guest link: ' + url);
-			}
+			sendToChat('Heres the guest link for you to join me: ' + data.guestLink);
+
+			setTimeout(function() { window.open(data.hostLink); }, 1000);
+		}
+
+		function getHostLinkError(jqXHR, textStatus, errorThrown) {
+			console.group('getHostLinkError');
+			console.debug(jqXHR);
+			console.debug(textStatus);
+			console.error(errorThrown);
+			console.groupEnd();
+		}
+
+		function getGuestLink(url){
+			console.debug('Guest link: ' + url);
+			console.debug(apiUrl);
+			$.ajax({
+				crossDomain: true,
+				data: {
+					hostName: 'Host Agent',
+					hostEmail: 'fakehost@aiuvhniaunakjsfhajkdfsh.com',
+					guestName: getParameterByName('chatUsername'),
+					guestEmail: 'fakeguest@aiuvhniaunakjsfhajkdfsh.com',
+					url: url,
+					screenDomain: screenDomain
+				},
+				error: getGuestLinkError,
+				headers: {
+					Authorization: authorizationHeader
+				},
+				method: 'GET',
+				success: getGuestLinkSuccess,
+				url: apiUrl
+			});
+		}
+		function getGuestLinkSuccess(data, textStatus, jqXHR) {
+			console.group('getGuestLinkSuccess');
+			console.debug(data);
+			console.debug(textStatus);
+			console.debug(jqXHR);
+			console.groupEnd();
+
+			sendToChat('Heres the host link for you to show me: ' + data.hostLink);
+
+			setTimeout(function() { window.open(data.guestLink); }, 1000);
+		}
+
+		function getGuestLinkError(jqXHR, textStatus, errorThrown) {
+			console.group('getGuestLinkError');
+			console.debug(jqXHR);
+			console.debug(textStatus);
+			console.error(errorThrown);
+			console.groupEnd();
+		}
 	</script>
 	<title>Web Chat</title>
 	<style type="text/css">
@@ -304,11 +242,11 @@
 			color: #007EA2;
 		}
 
-		.hostLinkDescription {
+		.linkDescription {
 			display:none;
 		}
 
-		.hostLinkHoverText {
+		.linkHoverText {
 			float: right;
 			display:none;
 			color: #BED62F;
