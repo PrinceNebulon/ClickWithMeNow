@@ -162,6 +162,32 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             return (int)code >= 200 && (int)code < 300;
         }
 
+        private void SendLinkToChat()
+        {
+            try
+            {
+                // Get chat interaction
+                var interaction = _interaction as ChatInteraction;
+                if (interaction == null) return;
+
+                // Send URL to chat (remember, the session type is in the context of the agent, so these messages are reversed)
+                if (SessionType == CwmnSessionType.View)
+                {
+                    interaction.SendText("Please click this link to begin hosting the screen share session: ");
+                    interaction.SendUrl(new Uri(HostLink));
+                }
+                else
+                {
+                    interaction.SendText("Please click this link to join me in the screen share session: ");
+                    interaction.SendUrl(new Uri(GuestLink));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
         #endregion
 
 
@@ -219,6 +245,9 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
                 Process.Start(SessionType == CwmnSessionType.Host
                     ? HostLink
                     : GuestLink);
+
+                // Try to send the link to chat
+                SendLinkToChat();
             }
             catch (Exception ex)
             {
