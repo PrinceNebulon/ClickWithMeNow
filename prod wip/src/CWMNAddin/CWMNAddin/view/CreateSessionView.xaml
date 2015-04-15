@@ -221,7 +221,18 @@
                                     </Style>
                                 </Image.Style>
                             </Image>
-                            <Label VerticalAlignment="Center" FontSize="16">Start Session</Label>
+                            <Label VerticalAlignment="Center" FontSize="16">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Setter Property="Content" Value="Start Viewing" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=SimpleSessionType, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                <Setter Property="Content" Value="Start Hosting" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
                         </StackPanel>
                     </Button>
 
