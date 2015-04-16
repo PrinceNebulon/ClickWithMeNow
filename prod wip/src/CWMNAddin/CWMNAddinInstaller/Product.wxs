@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?define ProductName = "CWMNAddin" ?>
+<?define Manufacturer = "Interactive Intelligence" ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="!(bind.FileVersion.ININ.Alliances.CWMNAddin.dll)" Manufacturer="$(var.Manufacturer)" UpgradeCode="A6246190-F480-46C2-9F69-765D84200B70">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <!--Directory Structure-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="ManufacturerFolder" Name="$(var.Manufacturer)">
+          <Directory Id="IcUserAppsFolder" Name="ICUserApps">
+            <Directory Id="INSTALLFOLDER" Name="Addins" />
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!--Add the Product Features (Shortcuts and Components)-->
+    <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+    </UI>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="ARPPRODUCTICON" Value="ininlogo.ico" />
+
+    <WixVariable Id="WixUIBannerBmp" Value="banner.png" />
+    <WixVariable Id="WixUIDialogBmp" Value="dialog.png" />
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+    <Icon Id="ininlogo.ico" SourceFile="ininlogo.ico"/>
+  </Product>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent" Guid="0BAC5745-EDB6-484B-B502-48D27EC16587">
+        <File Id="ININ.Alliances.CWMNAddin.dll" Name="ININ.Alliances.CWMNAddin.dll" Source="$(var.CWMNAddin.TargetDir)\ININ.Alliances.CWMNAddin.dll" Vital="yes" KeyPath="yes" DiskId="1"/>
+        <File Id="ININ.Alliances.CWMNAddin.pdb" Name="ININ.Alliances.CWMNAddin.pdb" Source="$(var.CWMNAddin.TargetDir)\ININ.Alliances.CWMNAddin.pdb" Vital="yes" KeyPath="no" DiskId="1"/>
+        <File Id="RestSharp.dll" Name="RestSharp.dll" Source="$(var.CWMNAddin.TargetDir)\RestSharp.dll" Vital="yes" KeyPath="no" DiskId="1"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
+
+
