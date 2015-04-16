@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CWMNAddin", "CWMNAddin\CWMNAddin.csproj", "{4A9EC5FC-F7E4-4A3B-90B8-B1F3CF48B058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowTester", "WindowTester\WindowTester.csproj", "{05DD2AFF-59AC-433C-A1C3-29D2AE0A1040}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{4A9EC5FC-F7E4-4A3B-90B8-B1F3CF48B058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A9EC5FC-F7E4-4A3B-90B8-B1F3CF48B058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A9EC5FC-F7E4-4A3B-90B8-B1F3CF48B058}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05DD2AFF-59AC-433C-A1C3-29D2AE0A1040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05DD2AFF-59AC-433C-A1C3-29D2AE0A1040}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05DD2AFF-59AC-433C-A1C3-29D2AE0A1040}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05DD2AFF-59AC-433C-A1C3-29D2AE0A1040}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
