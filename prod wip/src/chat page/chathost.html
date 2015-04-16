@@ -2,7 +2,7 @@
 <html>
 <head>
 	<script type="text/javascript" src="scripts/jquery-2.1.1.min.js"></script>
-	<script type="text/javascript" src="scripts/cwmn-config.js"></script>
+	<script type="text/javascript" src="scripts/config.js"></script>
     <script type="text/javascript">
         function Setup() {
             // start chat
@@ -22,8 +22,8 @@
         }
 
 		$(document).ready(function(){
-			populateMenuOptions($('#HostOptionList'), cwmnHostOptions, 'getHostLink');
-			populateMenuOptions($('#GuestOptionList'), cwmnGuestOptions, 'getGuestLink');
+			populateMenuOptions($('#HostOptionList'), hostOptions, 'getHostLink');
+			populateMenuOptions($('#GuestOptionList'), guestOptions, 'getGuestLink');
 		});
 
 		var globalListIndex = 0;
@@ -157,7 +157,7 @@
 			height: 99%;
 		}
 
-		#cwmnlogobox {
+		#logobox {
 			height: 39px;
 			background-color: #0E1C2C;
 			width: 100%;
@@ -166,7 +166,7 @@
 			border-style: solid;
 		}
 
-		#cwmnlogobox2 {
+		#logobox2 {
 			height: 32px;
 			background-color: #CCDAEA;
 			width: 100%;
@@ -175,7 +175,7 @@
 			border-style: solid;
 		}
 
-		#cwmnlogobox2 > div {
+		#logobox2 > div {
 			font-size: 14pt;
 			padding: 6px 0 0 6px;
 		}
@@ -255,10 +255,10 @@
 <body onload="Setup()">
 	<iframe id="chatiframe"></iframe>
 	<div id="ButtonContainer">
-		<div id="cwmnlogobox">
+		<div id="logobox">
 			<img src="img/cwmn logo.png" />
 		</div>
-		<div id="cwmnlogobox2">
+		<div id="logobox2">
 			<div>Screenshare with an agent</div>
 		</div>
 		<div id="ButtonContainerContents">

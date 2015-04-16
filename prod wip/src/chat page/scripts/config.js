@@ -1,5 +1,5 @@
 // Define the link options here
-var cwmnHostOptions = [
+var hostOptions = [
 		{
 			"text": "Page 1",
 			"description": "A page description",
@@ -11,7 +11,7 @@ var cwmnHostOptions = [
 			"url": "https://yoursite.com/another/page.html"
 		}
 	];
-var cwmnGuestOptions = [
+var guestOptions = [
 		{
 			"text": "Page 1",
 			"description": "A page description",
