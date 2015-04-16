@@ -1,29 +1,29 @@
 // Define the link options here
 var cwmnHostOptions = [
 		{
-			"text": "Landing Page",
-			"description": "A page to see stuff.",
-			"url": "https://tim-cic4su5.dev2000.com/cwmn2/landing.html"
+			"text": "Page 1",
+			"description": "A page description",
+			"url": "https://yoursite.com"
 		},
 		{
-			"text": "CWMN",
-			"description": "Click With Me Now's main page.",
-			"url": "http://clickwithmenow.com"
+			"text": "Page 2",
+			"description": "A description for another page",
+			"url": "https://yoursite.com/another/page.html"
 		}
 	];
 var cwmnGuestOptions = [
 		{
-			"text": "Landing Page",
-			"description": "A page to see stuff.",
-			"url": "https://tim-cic4su5.dev2000.com/cwmn2/landing.html"
+			"text": "Page 1",
+			"description": "A page description",
+			"url": "https://yoursite.com"
 		},
 		{
-			"text": "CWMN",
-			"description": "Click With Me Now's main page where you can learn more about Click With Me Now.",
-			"url": "http://clickwithmenow.com"
+			"text": "Page 2",
+			"description": "A description for another page",
+			"url": "https://yoursite.com/another/page.html"
 		}
 	];
 
-var screenDomain = 'tim-cic4su5.dev2000.com';
-var authorizationHeader = 'xPsCX7XXAPOdIeCON770z7v2bHykxZ5eAJnUKtzXjVQ0hDtJNgvd833xU3rvfv2M';
+var screenDomain = 'yourdomain.com';
+var authorizationHeader = 'auth header goes here';
 var apiUrl = 'http://m.clickwith.me/session/inviteToHost';
