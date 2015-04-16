@@ -79,6 +79,7 @@ namespace ININ.Alliances.CWMNAddin
             {
                 //TODO: initialization error
                 Console.WriteLine(ex);
+                CwmnAddin.AddinTracer.Exception(ex);
                 MessageBox.Show(
                     "A critical error was encountered on initilization. The Hootsuite integration will not function. " +
                     "Please contact your system administrator.\n\nError message: " + ex.Message,

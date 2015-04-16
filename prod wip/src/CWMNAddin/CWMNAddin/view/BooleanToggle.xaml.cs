@@ -200,6 +200,7 @@ namespace ININ.Alliances.CWMNAddin.view
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                CwmnAddin.AddinTracer.Exception(ex);
             }
         }
 
@@ -218,6 +219,7 @@ namespace ININ.Alliances.CWMNAddin.view
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                CwmnAddin.AddinTracer.Exception(ex);
             }
         }
 
@@ -236,6 +238,7 @@ namespace ININ.Alliances.CWMNAddin.view
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                CwmnAddin.AddinTracer.Exception(ex);
             }
         }
 
@@ -248,6 +251,7 @@ namespace ININ.Alliances.CWMNAddin.view
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                CwmnAddin.AddinTracer.Exception(ex);
             }
         }
 

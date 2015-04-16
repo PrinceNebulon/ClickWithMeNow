@@ -35,6 +35,14 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Interactive Intelligence\ICUserApps\ININ.Client.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ININ.Client.Common.Diagnostics">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Interactive Intelligence\ICUserApps\ININ.Client.Common.Diagnostics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ININ.Common">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Interactive Intelligence\ICUserApps\ININ.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="ININ.IceLib">
       <HintPath>..\..\..\..\..\..\lib\IceLib\IC4_2015_R2_P0 (x86)\bin\ININ.IceLib.dll</HintPath>
       <Private>False</Private>

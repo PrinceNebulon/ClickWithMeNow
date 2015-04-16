@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using ININ.Diagnostics;
 using ININ.IceLib.Connection;
 using ININ.InteractionClient;
 using ININ.InteractionClient.AddIn;
@@ -9,6 +10,8 @@ namespace ININ.Alliances.CWMNAddin
 {
     public class CwmnAddin : IAddIn
     {
+        public static readonly ITopicTracer AddinTracer = TopicTracerFactory.CreateTopicTracer("ININ.Alliances.CwmnAddin");
+
         public void Load(IServiceProvider serviceProvider)
         {
             try
@@ -29,6 +32,7 @@ namespace ININ.Alliances.CWMNAddin
             }
             catch (Exception ex)
             {
+                CwmnAddin.AddinTracer.Exception(ex);
                 MessageBox.Show(
                     "Error on load: " + ex.Message + Environment.NewLine + Environment.NewLine +
                     "Please restart the Interaction Client and contact your system administrator if this issue persists.",
