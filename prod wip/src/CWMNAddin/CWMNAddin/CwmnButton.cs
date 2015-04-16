@@ -77,7 +77,6 @@ namespace ININ.Alliances.CWMNAddin
             }
             catch (Exception ex)
             {
-                //TODO: initialization error
                 Console.WriteLine(ex);
                 CwmnAddin.AddinTracer.Exception(ex);
                 MessageBox.Show(
