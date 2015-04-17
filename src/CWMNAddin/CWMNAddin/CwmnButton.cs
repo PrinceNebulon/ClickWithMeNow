@@ -63,6 +63,7 @@ namespace ININ.Alliances.CWMNAddin
         public static string AgentName { get; private set; }
         public static string AgentEmail { get; private set; }
         public static string ScreenDomain { get; private set; }
+        public static string Authorization { get; private set; }
 
         #endregion
 
@@ -175,6 +176,11 @@ namespace ININ.Alliances.CWMNAddin
             ScreenDomain = GetParameterValueString(hootsuiteConfig.Parameters.Value, "screen domain");
             if (string.IsNullOrEmpty(ScreenDomain))
                 throw new Exception("Unable to retrieve screen domain!");
+
+            // Get authorization header value
+            Authorization = GetParameterValueString(hootsuiteConfig.Parameters.Value, "authorization");
+            if (string.IsNullOrEmpty(ScreenDomain))
+                throw new Exception("Unable to retrieve authorization!");
 
             // Find hootsuite URLS parameter
             var hootsuiteUrls =

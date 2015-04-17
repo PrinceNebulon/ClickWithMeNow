@@ -15,7 +15,6 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
         private bool _simpleSessionType;
         private ObservableCollection<UrlViewModel> _urls = new ObservableCollection<UrlViewModel>();
         private UrlViewModel _selectedUrl;
-        private const string Authorization = "xPsCX7XXAPOdIeCON770z7v2bHykxZ5eAJnUKtzXjVQ0hDtJNgvd833xU3rvfv2M";
         private const string ApiUrl = "http://m.clickwith.me";
         private readonly RestClient _client;
         private string _guestLink;
@@ -125,7 +124,7 @@ namespace ININ.Alliances.CWMNAddin.viewmodel
             var request = new RestRequest(resource, method);
 
             // Add standard headers
-            request.AddHeader("Authorization", Authorization);
+            request.AddHeader("Authorization", CwmnButton.Authorization);
             request.AddHeader("Cache-Control", "no-cache");
 
             // Add passed in parameters
